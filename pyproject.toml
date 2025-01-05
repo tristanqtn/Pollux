@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pollux"
+version = "1.0.0"
+description = "Pollux is an automated configuration and vulnerability scanner."
+authors = ["PFE24-T-252"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
