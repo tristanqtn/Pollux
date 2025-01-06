@@ -1,6 +1,9 @@
 import os
 import sys
 
+from pollux.config import PolluxConfig
+from pollux.utils import detect_os, detect_os_version
+
 print(r"""
 __/\\\\\\\\\\\\\__________________/\\\\\\_____/\\\\\\________________________________
  _\/\\\/////////\\\_______________\////\\\____\////\\\________________________________
@@ -16,19 +19,22 @@ print("======================== Pollux Wrapper ========================")
 print('Welcome to Pollux wrapper !')
 print('Current directory:', os.getcwd())
 print('Python version:', sys.version)
-print('Python executable:', sys.executable)
-print('Python path:', sys.path)
+print("=================================================================\n")
+print("======================== Pollux Config ==========================")
+print("Pollux configuration:")
+print("OS:", PolluxConfig.OS)
+print("Legitimate open ports:", PolluxConfig.LEGITIMATE_OPEN_PORTS)
+print("Legitimate processes:", PolluxConfig.LEGITIMATE_PROCESSES)
+print("Legitimate services:", PolluxConfig.LEGITIMATE_SERVICES)
+    
+if(PolluxConfig.OS != detect_os()):
+    print("The current OS is different from the one configured in Pollux.")
+    exit(1)
+else:
+    print("The current OS matches the one configured in Pollux.")
 print("=================================================================")
 
-# Detect the current OS
-if sys.platform == 'win32':
-    print('Windows')
-elif sys.platform == 'darwin':
-    print('macOS')
-elif sys.platform == 'linux':
-    print('Linux')
-else:
-    print('Unknown OS')
+print("OS version:", detect_os_version())
 
 
 
