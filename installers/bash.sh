@@ -21,3 +21,6 @@ then
 else
     echo "Poetry is already installed."
 fi
+
+# Install the Pollux venv
+poetry install

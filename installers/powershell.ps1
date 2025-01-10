@@ -23,3 +23,6 @@ if (-not $poetry) {
 } else {
     Write-Output "Poetry is already installed."
 }
+
+# Install the Pollux venv
+poetry install

@@ -25,3 +25,6 @@ if %errorlevel% neq 0 (
 ) else (
     echo Poetry is already installed.
 )
+
+# Install the Pollux venv
+poetry install
