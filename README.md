@@ -34,6 +34,13 @@ Pollux is made of a Python wrapper that orchestrate the scripts execution. The s
 
 There are two ways to install Pollux: usage installation and development installation. The usage installation is intended for users who want to use Pollux to perform security audits on their infrastructure. The development installation is intended for developers who want to contribute to the development of Pollux.
 
+## Minimal Requirements
+
+The Pollux tool is ment to be used on Windows and Linux servers. The installation scripts should handle most of the dependencie management for you. But some of theme should be installed before deploying Pollux. The following requirements are needed to run the tool:
+
+- Python 3.12
+- Git
+
 ### Usage Installation
 
 To install Pollux for usage, follow these steps:
@@ -41,20 +48,21 @@ To install Pollux for usage, follow these steps:
 1. Clone the Pollux repository:
 
 ```bash
-git clone
+git clone https://github.com/tristanqtn/Pollux.git
 ```
 
 2. Run the installation script:
 
 ```bash
 # (Linux)
-cd pollux
-./install.sh
+./installers/bash.sh
 
 # (Windows)
-cd pollux
-install.ps1
+./installers/batch.bat
+./installers/powershell.ps1
 ```
+
+Those scripts will make sure that all dependencies (Python3 & Poetry) are installed and that the Python wrapper is correctly set up. Then it installs the python dependencies.
 
 ### Development Installation
 
@@ -63,7 +71,7 @@ To install Pollux for development, follow these steps:
 1. Clone the Pollux repository:
 
 ```bash
-git clone
+git clone https://github.com/tristanqtn/Pollux.git
 ```
 
 2. Run the development installation script:

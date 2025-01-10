@@ -5,7 +5,7 @@ class PolluxConfig:
 
     # Current OS type
     # Example: 'windows' or 'linux'
-    OS = 'windows'
+    OS = ''
 
     # The list of legitimate open ports
     # Example: [80, 443, 22, 21, 25, 53, 110, 143, 3306, 5432, 8080, 8443]
