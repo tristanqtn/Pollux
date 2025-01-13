@@ -39,4 +39,5 @@ git clone https://github.com/tristanqtn/Pollux.git
 cd pollux
 poetry install
 poetry shell
+poetry run python -m pollux.main
 ```
