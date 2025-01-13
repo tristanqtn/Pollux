@@ -1,4 +1,4 @@
-# Pollux Wrapper
+# Pollux Tool
 
 Pollux is made of a Python wrapper that orchestrate the scripts execution. This document describes the Python wrapper and how to use it.
 
