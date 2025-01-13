@@ -2,7 +2,7 @@ import os
 import sys
 
 from pollux.config import PolluxConfig
-from pollux.utils import detect_os, detect_os_version
+from pollux.wrapper.utils import detect_os, detect_os_version
 
 def logo():
     print(r"""

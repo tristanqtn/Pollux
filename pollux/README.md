@@ -6,7 +6,7 @@ Pollux is made of a Python wrapper that orchestrate the scripts execution. This 
 
 ### Presentation
 
-Pollux is made of a Python wrapper that orchestrate the scripts execution. The scripts are written in Powershell and Bash. The results of each script are stored in a temporary file. The Python wrapper then reads the results and generates a report in markdown format.
+Pollux is made of a Python wrapper that orchestrate the scripts execution. The scripts are written inPython, Powershell and Bash. The results of each script are stored in a temporary file. The Python wrapper then reads the results and generates a report in markdown format.
 
 ### Technologies
 
@@ -20,9 +20,8 @@ The Python wrapper is located in the `pollux` directory. It is composed of the f
 
 - `main.py`: the main file that orchestrates the overall Pollux execution.
 - `config.py`: the configuration file that needs to be filled by the user who wants to deploy Pollux for auditing its infrastructure.
-- `initialize.py`: the entrypoint of Pollux solution that retrieves the configuration and starts the audit.
-- `utils.py`: a set of utility functions used by the Python wrapper.
 - `/scripts`: the directory that contains the scripts to be executed on the audited devices.
+- `/wrapper`: the directory that contains the Python wrapper.
 
 ## Installation
 

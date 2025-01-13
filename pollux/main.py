@@ -1,4 +1,4 @@
-from pollux.initialize import logo, check_config
+from pollux.wrapper.initialize import logo, check_config
 
 if __name__ == "__main__":
     logo()
