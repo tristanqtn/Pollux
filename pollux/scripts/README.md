@@ -4,5 +4,6 @@ This directory contains scripts that to be executed on the audited device. Those
 
 ## Scripts List & Description
 
-| Script Name | Description | Link |
-| :---------: | :---------: | :--: |
+|  Script Name   |                                                      Description                                                      |                    Link                    |
+| :------------: | :-------------------------------------------------------------------------------------------------------------------: | :----------------------------------------: |
+| antivirusCheck | This script checks if an antivirus is installed on the device, if an update is available and if AV scans are running. | [antivirusCheck](antivirusCheck/README.md) |
