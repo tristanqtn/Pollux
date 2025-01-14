@@ -1,5 +1,14 @@
 @echo off
 
+echo == Pollux Installer for Windows ==
+echo This script will install the dependencies required to run Pollux.
+
+echo Currently running from the directory: %~dp0
+echo ==================================
+
+echo ==================================
+echo Installing dependencies...
+
 REM Check for Python3
 where python3 >nul 2>&1
 if %errorlevel% neq 0 (
@@ -26,5 +35,21 @@ if %errorlevel% neq 0 (
     echo Poetry is already installed.
 )
 
-# Install the Pollux venv
+echo ==================================
+
+echo ==================================
+echo Installing Pollux Python virtual env and dependencies...
 poetry install
+echo ==================================
+
+echo ==================================
+echo Pollux dependencies installed successfully.
+echo.
+echo To run Pollux, activate the virtual environment by running the following command:
+echo     poetry shell
+echo.
+echo Then run Pollux by executing the following command:
+echo     poetry run python -m pollux.main
+echo.
+echo Don't forget that Pollux requires the configuration file to run.
+echo ==================================

@@ -1,3 +1,13 @@
+# Print a message to the console to indicate that the script is installing dependencies
+Write-Output "== Pollux Installer for Windows =="
+Write-Output "This script will install the dependencies required to run Pollux."
+$pwd = Get-Location
+Write-Output "Currently running from the directory: $pwd"
+
+Write-Output "==================================`n"
+
+Write-Output "=================================="
+Write-Output "Installing dependencies..."
 # Check for Python3
 $python = Get-Command python3 -ErrorAction SilentlyContinue
 if (-not $python) {
@@ -24,5 +34,18 @@ if (-not $poetry) {
     Write-Output "Poetry is already installed."
 }
 
-# Install the Pollux venv
+Write-Output "==================================`n"
+
+Write-Output "=================================="
+Write-Output "Installing Pollux Python virtual env and dependencies..."
 poetry install
+Write-Output "==================================`n"
+
+Write-Output "=================================="
+Write-Output "Pollux dependencies installed successfully."
+Write-Output "`nTo run Pollux, activate the virtual environment by running the following command:"
+Write-Output "`tpoetry shell"
+Write-Output "`nThen run Pollux by executing the following command:"
+Write-Output "`tpoetry run python -m pollux.main"
+Write-Output "`nDon't forget that Pollux requires the configuration file to run."
+Write-Output "==================================`n"
