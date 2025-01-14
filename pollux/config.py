@@ -7,7 +7,7 @@ class PolluxConfig:
     # Mandatory: Yes
     # Default:  OS = 'windows'
     #           OS = 'linux'
-    OS = "linux"
+    OS = "windows"
 
     # Type of session running Pollux
     # Type: boolean
@@ -15,7 +15,7 @@ class PolluxConfig:
     # Default: RUNNING_AS_ADMIN = 1; true running as root
     #          RUNNING_AS_ADMIN = 0; false running as user
     # Preferable: 1
-    RUNNING_AS_ADMIN = 0
+    RUNNING_AS_ADMIN = 1
 
     # The path for the temporary files (outputs of scripts)
     # Type: string

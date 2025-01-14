@@ -4,18 +4,15 @@
 # Requires root privileges for full functionality.
 
 # Output file
-output_file="Antivirus_Linux_report.tmp"
+if [ -z "$1" ]; then
+    echo "Usage: $0 <output_file>"
+    exit 1
+fi
+
+output_file="$1"
 
 # Clear the output file
 > "$output_file"
-
-# Function to check if the script is run as root
-check_root() {
-    if [ "$EUID" -ne 0 ]; then
-        echo "ERROR: Script requires root privileges." >> "$output_file"
-        exit 1
-    fi
-}
 
 # Function to handle errors
 handle_error() {
@@ -182,7 +179,6 @@ check_scheduled_scans() {
 
 
 # Main execution flow
-check_root
 detect_antivirus
 check_av_status
 check_database_updates

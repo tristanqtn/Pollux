@@ -1,5 +1,16 @@
-# Define the log file
-$LogFile = "Antivirus_Windows_Report.tmp"
+# Parse command line arguments
+param (
+    [string]$LogFile
+)
+
+# Check if LogFile parameter is provided
+if (-not $LogFile) {
+    Write-Host "Please provide a log file path using --LogFile"
+    exit
+}
+
+# print LogFile
+Write-Host "LogFile: $LogFile"
 
 # Clear the log file if it exists
 if (Test-Path $LogFile) { Remove-Item $LogFile }
@@ -10,12 +21,6 @@ function Log-Data {
         [string]$Data
     )
     $Data | Out-File -FilePath $LogFile -Append
-}
-
-# Check for administrative privileges
-if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Log-Data "ERROR: Script not running with administrative privileges. Please run as Administrator."
-    return
 }
 
 # Function to check Windows Defender status

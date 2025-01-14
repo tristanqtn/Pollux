@@ -52,9 +52,9 @@ def check_path_exists(path):
     """
     return os.path.exists(path)
 
+
 def dos2unix(path):
-    with open(path, 'rb') as f:
+    with open(path, "rb") as f:
         content = f.read()
-    with open(path, 'wb') as f:
-        f.write(content.replace(b'\r\n', b'\n'))
-        
+    with open(path, "wb") as f:
+        f.write(content.replace(b"\r\n", b"\n"))

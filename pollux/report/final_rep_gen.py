@@ -2,8 +2,9 @@ import os
 from datetime import datetime
 from pollux.config import PolluxConfig
 
-hardcoded_path = "/tmp/pollux/output"# PolluxConfig().PATH   
+hardcoded_path = "/tmp/pollux/output"  # PolluxConfig().PATH
 output_file = "POLLUX_REPORT.md"
+
 
 def get_current_timestamp():
     now = datetime.now()
@@ -22,9 +23,9 @@ def process_file(file_path):
 
 
 def get_pollux_config_details():
-    '''
+    """
     Adding POLLUX configuration details to the report
-    '''
+    """
     config = PolluxConfig()
     config_details = [
         "#### Pollux Configuration\n",
@@ -79,16 +80,18 @@ def generate_md_report(input_directory, output_file):
             report_content.append(f"#### Error processing {file_name}: {e}\n")
     report_content.append("### END OF CONTENT\n\n")
 
-    report_content.extend([
-        "### RECOMMENDATIONS\n",
-        "\n",
-        "### END OF RECOMMENDATIONS\n\n",
-        "### ANNEXES\n",
-        "#### Configuration\n",
-        "\n",
-        get_pollux_config_details(),
-        "\n",
-    ])
+    report_content.extend(
+        [
+            "### RECOMMENDATIONS\n",
+            "\n",
+            "### END OF RECOMMENDATIONS\n\n",
+            "### ANNEXES\n",
+            "#### Configuration\n",
+            "\n",
+            get_pollux_config_details(),
+            "\n",
+        ]
+    )
 
     with open(output_file, "w") as report_file:
         report_file.write("\n".join(report_content))
