@@ -30,18 +30,6 @@ This directory contains scripts for verifying the OS version, and detect newer o
 - Logs results to a temporary file for auditing purposes.
 - Provides information on outdated packages, including names and versions.
 
-### **Supported Linux Antivirus Solutions**
-The Linux script includes checks for the following antivirus software:
-- **ClamAV**
-- **Sophos**
-- **ESET**
-- **Kaspersky**
-- **Comodo**
-- **F-Secure**
-- **Trend Micro**
-- **Bitdefender**
-- **Avast**
-
 ### Important information
 * Both scripts assume the user has root or administrative privileges. Running them as a standard user may lead to incomplete results or errors.
 * Neither script differentiates between a system needing an "update" (applying updates to installed packages) and a full "upgrade" (moving to a new OS version).
