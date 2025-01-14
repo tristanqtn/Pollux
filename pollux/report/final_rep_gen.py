@@ -52,10 +52,8 @@ def generate_md_report(input_directory, output_file):
         print("No file found in directory.")
         return
 
-    # Récupération de la date et du timestamp
     date, timestamp = get_current_timestamp()
 
-    # Préparation du contenu du rapport
     report_content = [
         "# POLLUX REPORT\n",
         f"_Date : {date}_\n",
@@ -64,7 +62,6 @@ def generate_md_report(input_directory, output_file):
         "### CONTENT\n",
     ]
 
-    # Traitement des fichiers et ajout du contenu
     for file_path in sorted(file_list):
         file_name = os.path.basename(file_path)
         try:
