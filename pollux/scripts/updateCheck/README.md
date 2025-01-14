@@ -32,6 +32,5 @@ This directory contains scripts for verifying the OS version, and detect newer o
 
 ### Important information
 * Both scripts assume the user has root or administrative privileges. Running them as a standard user may lead to incomplete results or errors.
-* Neither script differentiates between a system needing an "update" (applying updates to installed packages) and a full "upgrade" (moving to a new OS version).
-* On Windows : Systems using a local WSUS or other custom update servers may not provide accurate "up-to-date" information.
+
 ---
