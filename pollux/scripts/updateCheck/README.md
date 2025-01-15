@@ -12,7 +12,7 @@ This directory contains scripts for verifying the OS version, and detect newer o
 
 ### **2. Linux Script**
 
-- **`updateCheck.sh`:** A Bash script for checking Windows version.
+- **`updateCheck.sh`:** A Bash script for checking Linux version.
 
 ---
 
