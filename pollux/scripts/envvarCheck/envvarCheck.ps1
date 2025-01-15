@@ -1,5 +1,5 @@
 # Paths
-$outputDir = "C:\Temp\pollux\output"
+$outputDir = "C:\tmp\pollux\output"
 $outputFile = Join-Path -Path $outputDir -ChildPath "envvarCheck.tmp"
 
 # Create the output directory if it doesn't exist
@@ -28,11 +28,12 @@ function Check-EnvVariables {
         if ($name -match "password|secret|key|user|pw|id" -or $value -match "password|secret|key|user|pw|id") {
             $content += "Abnormal variable detected: $name"
             $content += "Value: $value"
-            $content += "***"
+            $content += ""
         }
     }
 
     # Write the results to the file
+    $content += "***"
     $content | Out-File -FilePath $outputFile -Encoding UTF8
     Write-Host "Environment variable check completed. Results saved to: $outputFile"
 }
