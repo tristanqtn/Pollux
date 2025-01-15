@@ -1,4 +1,9 @@
-from pollux.wrapper.initialize import logo, check_config, audit_to_conduct
+from pollux.wrapper.initialize import (
+    logo,
+    check_config,
+    audit_to_conduct,
+    flush_temporary_files,
+)
 from pollux.wrapper.wrapper import (
     execute_script_list_lin,
     execute_script_list_win,
@@ -11,6 +16,7 @@ if __name__ == "__main__":
     check_config()
     audit_to_conduct()
     verify_output_path()
+    flush_temporary_files()
 
     if PolluxConfig.OS == "windows":
         for script in PolluxConfig.SCRIPT_LIST:

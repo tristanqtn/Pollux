@@ -74,3 +74,24 @@ def audit_to_conduct():
 
     print("\nTemporary file location :", PolluxConfig.TEMPORARY_FILE_LOCATION)
     print("=================================================================\n")
+
+
+def flush_temporary_files():
+    print("======================== Pollux Cleanup =========================")
+    if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
+        print("Temporary file location not set. Exiting.")
+    elif PolluxConfig.RUNNING_AS_ADMIN == 0 and PolluxConfig.OS == "linux":
+        print(
+            "Need to be root to flush temporary files in :",
+            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        )
+    else:
+        print(
+            "Flushing temporary files from previous runs in :",
+            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        )
+        for file in os.listdir(PolluxConfig.TEMPORARY_FILE_LOCATION):
+            print("Deleting :", file)
+            os.remove(PolluxConfig.TEMPORARY_FILE_LOCATION + file)
+        print("Temporary files flushed.")
+    print("=================================================================\n")

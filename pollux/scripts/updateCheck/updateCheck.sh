@@ -1,8 +1,13 @@
 #!/bin/bash
 
-# Define the temporary file path
-# Hardcoded for now, will be changed to a more dynamic path
-TMP_FILE="/tmp/pollux/output/updateCheck.tmp"
+if [ -z "$1" ]; then
+    echo "Usage: $0 <output_file>"
+    exit 1
+fi
+
+TMP_FILE="$1"
+
+> "$TMP_FILE"
 
 # Ensure the temporary directory exists
 mkdir -p "$(dirname "$TMP_FILE")"
@@ -57,6 +62,3 @@ fi
 
 # Add footer to the file
 echo "***" >> "$TMP_FILE"
-
-# Output the result
-echo "Check complete. Results written to $TMP_FILE"

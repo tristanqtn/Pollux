@@ -9,9 +9,6 @@ if (-not $LogFile) {
     exit
 }
 
-# print LogFile
-Write-Host "LogFile: $LogFile"
-
 # Clear the log file if it exists
 if (Test-Path $LogFile) { Remove-Item $LogFile }
 

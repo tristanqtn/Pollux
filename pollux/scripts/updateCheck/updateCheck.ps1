@@ -1,5 +1,14 @@
-# Define the path for the temporary file
-$tmpFilePath = "/tmp/pollux/output/updateCheck.tmp"
+# Parse command line arguments
+param (
+    [string]$tmpFilePath
+)
+
+# Check if LogFile parameter is provided
+if (-not $tmpFilePath) {
+    Write-Host "Please provide a log file path using tmpFilePath parameter."
+    exit
+}
+
 
 # Ensure the directory exists
 if (-not (Test-Path (Split-Path $tmpFilePath))) {

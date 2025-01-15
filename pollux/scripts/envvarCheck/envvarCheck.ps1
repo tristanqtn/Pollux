@@ -1,10 +1,17 @@
-# Paths
-$outputDir = "C:\tmp\pollux\output"
-$outputFile = Join-Path -Path $outputDir -ChildPath "envvarCheck.tmp"
+# Parse command line arguments
+param (
+    [string]$outputFile
+)
 
-# Create the output directory if it doesn't exist
-if (-not (Test-Path -Path $outputDir)) {
-    New-Item -Path $outputDir -ItemType Directory | Out-Null
+# Check if LogFile parameter is provided
+if (-not $outputFile) {
+    Write-Host "Please provide a log file path using outputFile parameter."
+    exit
+}
+
+# Ensure the directory exists
+if (-not (Test-Path (Split-Path $outputFile))) {
+    New-Item -ItemType Directory -Path (Split-Path $outputFile) -Force | Out-Null
 }
 
 # Function to check environment variables for abnormalities

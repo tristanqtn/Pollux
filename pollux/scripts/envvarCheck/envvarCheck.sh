@@ -1,12 +1,15 @@
 #!/bin/bash
+if [ -z "$1" ]; then
+    echo "Usage: $0 <output_file>"
+    exit 1
+fi
 
-# Paths
-OUTPUT_DIR="/tmp/pollux/output"
-OUTPUT_SCRIPT="$OUTPUT_DIR/envvarCheck.tmp"
-PARSED_OUTPUT="$OUTPUT_DIR/parsed_envvarCheck.tmp"
+OUTPUT_SCRIPT="$1"
+
+> "$OUTPUT_SCRIPT"
 
 # Ensure the output directory exists
-mkdir -p "$OUTPUT_DIR"
+mkdir -p "$(dirname "$OUTPUT_SCRIPT")"
 
 # Function to check environment variables for abnormalities
 check_env_variables() {
@@ -32,8 +35,6 @@ check_env_variables() {
         echo "Environment variable check completed."
         echo "***"
     } > "$OUTPUT_SCRIPT"
-
-    echo "Environment variable report created: $OUTPUT_SCRIPT"
 }
 
 

@@ -30,9 +30,7 @@ class PolluxConfig:
     # Type: list[str]
     # Mandatory: Yes
     # Example:     SCRIPT_LIST = ['firewallCheck', 'antivirusCheck', 'filesystemCheck', 'SessionCheck', 'PasswordPolicyCheck', 'PlannedTaskCheck', 'UpdateCheck']
-    SCRIPT_LIST = [
-        "antivirusCheck",
-    ]
+    SCRIPT_LIST = ["antivirusCheck", "updateCheck", "envvarCheck"]
 
     # Extension of the script files
     # Type: string
