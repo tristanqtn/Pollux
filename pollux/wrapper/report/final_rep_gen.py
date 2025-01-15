@@ -13,29 +13,57 @@ def get_current_timestamp():
     return date_str, timestamp_str
 
 
-def process_file(file_path):
+def process_file_blocks(file_path):
+    """
+    Extracts blocks of text from the file. A block starts with a line containing
+    '## WORDS HERE' and ends with '***'.
+    """
     try:
         with open(file_path, "r") as file:
-            return file.read().strip()
+            content = file.readlines()
     except Exception as e:
         print(f"Error while reading content of {file_path}: {e}")
         return None
 
+    blocks = []
+    block = []
+    in_block = False
 
-def get_pollux_config_details():
-    """
-    Adding POLLUX configuration details to the report
-    """
-    config = PolluxConfig()
-    config_details = [
-        "#### Pollux Configuration\n",
-        f"- **OS**: {config.OS or 'Not defined'}\n",
-        f"- **Legitimate Open Ports**: {', '.join(map(str, config.LEGITIMATE_OPEN_PORTS)) or 'None'}\n",
-        f"- **Legitimate Processes**: {', '.join(config.LEGITIMATE_PROCESSES) or 'None'}\n",
-        f"- **Legitimate Services**: {', '.join(config.LEGITIMATE_SERVICES) or 'None'}\n",
-        f"- **Legitimate Users**: {', '.join(config.LEGITIMATE_USERS) or 'None'}\n",
-    ]
-    return "\n".join(config_details)
+    for line in content:
+        if line.strip().startswith("## "):  
+            if in_block and block:
+                blocks.append("".join(block).strip())
+                block = []
+            in_block = True
+            block.append(line)
+        elif in_block and line.strip() == "***":  # End of a block
+            block.append(line)
+            blocks.append("".join(block).strip())
+            block = []
+            in_block = False
+        elif in_block: 
+            block.append(line)
+
+    if block:  # Capture any remaining block
+        blocks.append("".join(block).strip())
+
+    return blocks
+
+
+#def get_pollux_config_details():
+#    """
+#    Adding POLLUX configuration details to the report
+#    """
+#    config = PolluxConfig()
+#    config_details = [
+#        "#### Pollux Configuration\n",
+#        f"- **OS**: {config.OS or 'Not defined'}\n",
+#        f"- **Legitimate Open Ports**: {', '.join(map(str, config.LEGITIMATE_OPEN_PORTS)) or 'None'}\n",
+#        f"- **Legitimate Processes**: {', '.join(config.LEGITIMATE_PROCESSES) or 'None'}\n",
+#        f"- **Legitimate Services**: {', '.join(config.LEGITIMATE_SERVICES) or 'None'}\n",
+#        f"- **Legitimate Users**: {', '.join(config.LEGITIMATE_USERS) or 'None'}\n",
+#    ]
+#    return "\n".join(config_details)
 
 
 def generate_md_report(input_directory, output_file):
@@ -66,13 +94,14 @@ def generate_md_report(input_directory, output_file):
     for file_path in sorted(file_list):
         file_name = os.path.basename(file_path)
         try:
-            file_content = process_file(file_path)
-            if file_content:
+            blocks = process_file_blocks(file_path)
+            if blocks:
                 report_content.append(f"#### Content from {file_name}\n")
-                report_content.append(file_content)
-                report_content.append("\n")
+                for block in blocks:
+                    report_content.append(block)
+                    report_content.append("\n")  
             else:
-                report_content.append(f"#### Error reading {file_name}\n")
+                report_content.append(f"#### No relevant content in {file_name}\n")
         except Exception as e:
             report_content.append(f"#### Error processing {file_name}: {e}\n")
     report_content.append("### END OF CONTENT\n\n")
@@ -85,7 +114,7 @@ def generate_md_report(input_directory, output_file):
             "### ANNEXES\n",
             "#### Configuration\n",
             "\n",
-            get_pollux_config_details(),
+#            get_pollux_config_details(),
             "\n",
         ]
     )
