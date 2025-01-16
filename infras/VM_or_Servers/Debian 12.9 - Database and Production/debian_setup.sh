@@ -1,4 +1,4 @@
-sudo apt upda
+sudo apt update
 
 # if you wanna upgrade all the packages installed (not our case), remove # below
 # sudo apt upgrade -y 
