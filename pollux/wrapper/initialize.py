@@ -2,10 +2,13 @@ import os
 import sys
 
 from pollux.config import PolluxConfig
-from pollux.wrapper.utils import detect_os, running_as_root
+from pollux.wrapper.utils.utils import detect_os, running_as_root
 
 
 def logo():
+    """
+    Print the Pollux logo. And base information about the tool.
+    """
     print(r"""
 __/\\\\\\\\\\\\\__________________/\\\\\\_____/\\\\\\________________________________
  _\/\\\/////////\\\_______________\////\\\____\////\\\________________________________
@@ -19,12 +22,21 @@ __/\\\\\\\\\\\\\__________________/\\\\\\_____/\\\\\\___________________________
     """)
     print("======================== Pollux Wrapper ========================")
     print("Welcome to Pollux wrapper !")
+    print("Pollux is a tool to conduct security audits on Windows and Linux systems.")
+    print("You are currently running Pollux in its version: " + PolluxConfig.VERSION)
     print("Current directory:", os.getcwd())
     print("Python version:", sys.version)
     print("=================================================================\n")
 
 
 def check_config():
+    """
+    Check that the configuration of Pollux matches the execution environment.
+    If any mismatch is found, the script will exit.
+
+    :param: None
+    :return: None
+    """
     print("======================== Pollux Config ==========================")
     print("Pollux configuration:\n")
     if PolluxConfig.OS != detect_os():
@@ -67,6 +79,9 @@ def check_config():
 
 
 def audit_to_conduct():
+    """
+    Print the audit to conduct based on the configuration.
+    """
     print("======================== Pollux Audit ===========================")
     print("Audit to conduct:")
     for script in PolluxConfig.SCRIPT_LIST:
@@ -77,6 +92,9 @@ def audit_to_conduct():
 
 
 def flush_temporary_files():
+    """
+    Flush the temporary files in the temporary file location.
+    """
     print("======================== Pollux Cleanup =========================")
     if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
         print("Temporary file location not set. Exiting.")

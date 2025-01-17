@@ -1,13 +1,13 @@
 import os
 
 from pollux.config import PolluxConfig
-from pollux.wrapper.utils import check_path_exists
-from pollux.wrapper.win_executors import (
+from pollux.wrapper.utils.utils import check_path_exists
+from pollux.wrapper.executors.win_executors import (
     execute_antivirus_check_win,
     execute_updates_check_win,
     execute_envvar_check_win,
 )
-from pollux.wrapper.lin_executors import (
+from pollux.wrapper.executors.lin_executors import (
     execute_antivirus_check_lin,
     execute_update_check_lin,
     execute_envvar_check_lin,
@@ -15,6 +15,12 @@ from pollux.wrapper.lin_executors import (
 
 
 def verify_output_path():
+    """
+    Verify if the output path exists, if not create it.
+
+    :pram: None
+    :return: None
+    """
     if not check_path_exists(PolluxConfig.TEMPORARY_FILE_LOCATION):
         print("Temporary file location does not exist.")
         print(
@@ -24,6 +30,13 @@ def verify_output_path():
 
 
 def execute_script_list_win(script_list):
+    """
+    Execute the scripts in the script list for Windows.
+
+    :param script_list: list of scripts to execute
+    :type script_list: list[str]
+    :return: None
+    """
     if "antivirusCheck" in script_list:
         execute_antivirus_check_win()
     elif "updateCheck" in script_list:
@@ -35,6 +48,13 @@ def execute_script_list_win(script_list):
 
 
 def execute_script_list_lin(script_list):
+    """
+    Execute the scripts in the script list for Linux.
+
+    :param script_list: list of scripts to execute
+    :type script_list: list[str]
+    :return: None
+    """
     if "antivirusCheck" in script_list:
         execute_antivirus_check_lin()
     elif "updateCheck" in script_list:

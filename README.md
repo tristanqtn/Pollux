@@ -64,13 +64,11 @@ The scripts to run are also stored in the configuration object. The Python wrapp
 
 ```python
 class PolluxConfig:
-    # The list of scripts to run
-    # Type: Boolean
-    # Mandatory: No
-    # Example: antivirusCheck = 1
-    antivirusCheck = 1
-    firewallCheck = 1
-    portCheck = 0
+    # List of scripts to run
+    # Type: list[str]
+    # Mandatory: Yes
+    # Example:     SCRIPT_LIST = ['firewallCheck', 'antivirusCheck', 'filesystemCheck', 'SessionCheck', 'PasswordPolicyCheck', 'PlannedTaskCheck', 'UpdateCheck']
+    SCRIPT_LIST = ["antivirusCheck", "updateCheck", "envvarCheck"]
 ```
 
 > **Important :** Some scripts will require the definition of some configuration constants. Those constants must be defined in the configuration object. It will be explicity mentioned in the script documentation and in the constant documentation.
@@ -151,7 +149,7 @@ pollux/
 ├── .gitignore          #the gitignore file
 ├── pyproject.toml      #the poetry configuration file
 ├── LICENSE             #the license file
-├── README.md           #the main documentation file
+└── README.md           #the main documentation file
 ```
 
 ## Installation
@@ -163,7 +161,7 @@ There are two ways to install Pollux: usage installation and development install
 The Pollux tool is ment to be used on Windows and Linux servers. The installation scripts should handle most of the dependencie management for you. But some of theme should be installed before deploying Pollux. The following requirements are needed to run the tool:
 
 - Python 3.12
-- Git
+- Git (for installation only)
 
 ### Usage Installation
 
@@ -227,6 +225,8 @@ poetry shell
 
 ## Authors
 
+### Team
+
 |        Name         |    GitHub     |             Mail             |
 | :-----------------: | :-----------: | :--------------------------: |
 |   Tristan Querton   |  tristanqtn   |  tristan.querton@edu.ece.fr  |
@@ -235,3 +235,7 @@ poetry shell
 |   Antoine Herman    | AntoineHerman |  antoine.herman@edu.ece.fr   |
 |     Evan Debray     |    EvanDbr    |    evan.debray@edu.ece.fr    |
 |  Théophile Broqua   |  TheoLeDozo   | theophile.broqua@edu.ece.fr  |
+
+### Our Credo
+
+In addition to helping small businesses by offering them a security solution, we also want to make a contribution to the open-source community. We're all very attached to the values of sharing, exchange and community learning that this community embodies. Most of us learned to code on our own, in our bedrooms, on open-source dev forums. Now it's time for us to give back to the community that has given us so much by making the Pollux project 100% transparent, reusable and documented. This is our little contribution to the community dev edifice.

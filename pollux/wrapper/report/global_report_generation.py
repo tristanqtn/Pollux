@@ -34,7 +34,7 @@ def process_file_blocks(file_path):
     in_block = False
 
     for line in content:
-        if line.strip().startswith("## "):  
+        if line.strip().startswith("## "):
             if in_block and block:
                 blocks.append("".join(block).strip())
                 block = []
@@ -45,7 +45,7 @@ def process_file_blocks(file_path):
             blocks.append("".join(block).strip())
             block = []
             in_block = False
-        elif in_block: 
+        elif in_block:
             block.append(line)
 
     if block:  # Capture any remaining block
@@ -103,7 +103,7 @@ def generate_md_report(input_directory, output_file):
                 report_content.append(f"#### Content from {file_name}\n")
                 for block in blocks:
                     report_content.append(block)
-                    report_content.append("\n")  
+                    report_content.append("\n")
             else:
                 report_content.append(f"#### No relevant content in {file_name}\n")
         except Exception as e:
@@ -118,7 +118,7 @@ def generate_md_report(input_directory, output_file):
             "### ANNEXES\n",
             "#### Configuration\n",
             "\n",
-#            get_pollux_config_details(),
+            #            get_pollux_config_details(),
             "\n",
         ]
     )

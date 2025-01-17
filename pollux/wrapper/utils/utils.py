@@ -54,6 +54,13 @@ def check_path_exists(path):
 
 
 def dos2unix(path):
+    """
+    Convert a file from DOS to Unix format
+
+    :param path: the path of the file to convert
+    :type path: str
+    :return: None
+    """
     with open(path, "rb") as f:
         content = f.read()
     with open(path, "wb") as f:

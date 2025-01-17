@@ -2,6 +2,9 @@
 
 ## Configuration
 class PolluxConfig:
+    # Version of Pollux
+    VERSION = "1.0.0"
+
     # Current OS type
     # Type: string
     # Mandatory: Yes
@@ -15,7 +18,7 @@ class PolluxConfig:
     # Default: RUNNING_AS_ADMIN = 1; true running as root
     #          RUNNING_AS_ADMIN = 0; false running as user
     # Preferable: 1
-    RUNNING_AS_ADMIN = 1
+    RUNNING_AS_ADMIN = 0
 
     # The path for the temporary files (outputs of scripts)
     # Type: string
@@ -25,6 +28,15 @@ class PolluxConfig:
     TEMPORARY_FILE_LOCATION = ""  # Leave it empty, it will be set in the code
     LIN_TEMPORARY_FILE_LOCATION = "/tmp/pollux/"
     WIN_TEMPORARY_FILE_LOCATION = "C:\\Temp\\pollux\\"
+
+    # The path for the final audit report file
+    # Type: string
+    # Mandatory: Yes
+    # Default : LIN_REPORT_FILE_LOCATION = '/tmp/pollux/'
+    #           WIN_REPORT_FILE_LOCATION = 'C:\\Temp\\pollux\\'
+    REPORT_FILE_LOCATION = ""  # Leave it empty, it will be set in the code
+    LIN_REPORT_FILE_LOCATION = "/home/"
+    WIN_REPORT_FILE_LOCATION = "C:\\"
 
     # List of scripts to run
     # Type: list[str]
