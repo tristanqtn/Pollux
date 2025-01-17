@@ -49,6 +49,7 @@ class PolluxConfig:
     SCRIPT_LIST = ["antivirusCheck", "updateCheck", "envvarCheck"]
 ```
 
+> [!WARNING]  
 > **Important :** Some scripts will require the definition of some configuration constants. Those constants must be defined in the configuration object. It will be explicity mentioned in the script documentation and in the constant documentation.
 
 ## Installation

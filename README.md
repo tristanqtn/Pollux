@@ -12,6 +12,30 @@ __/\\\\\\\\\\\\\__________________/\\\\\\_____/\\\\\\___________________________
         _\///_________________\/////_____\/////////__\/////////___\/////////___\///____\///__
 ```
 
+## Table of Contents
+
+- [Description](#description)
+  - [Context](#context)
+  - [Objectives](#objectives)
+- [Technical Stack](#technical-stack)
+  - [Presentation](#presentation)
+  - [Detailed Presentation](#detailed-presentation)
+    - [Audit Process with Pollux](#audit-process-with-pollux)
+    - [Pollux Configuration](#pollux-configuration)
+    - [Pollux Scripts](#pollux-scripts)
+    - [Pollux Report](#pollux-report)
+  - [Repository Structure](#repository-structure)
+- [Installation](#installation)
+  - [Minimal Requirements](#minimal-requirements)
+  - [Usage Installation](#usage-installation)
+  - [Development Installation](#development-installation)
+    - [Additional Requirements](#additional-requirements)
+    - [Installation](#installation-1)
+- [Usage](#usage)
+- [Authors](#authors)
+  - [Team](#team)
+  - [Our Credo](#our-credo)
+
 ## Description
 
 Pollux is a cybersecurity tool that allows small and medium-sized businesses to perform security audits on their infrastructure. It is a simple and automated solution that does not require advanced computer or cybersecurity skills.
@@ -156,9 +180,12 @@ pollux/
 
 There are two ways to install Pollux: usage installation and development installation. The usage installation is intended for users who want to use Pollux to perform security audits on their infrastructure. The development installation is intended for developers who want to contribute to the development of Pollux.
 
-## Minimal Requirements
+### Minimal Requirements
 
 The Pollux tool is ment to be used on Windows and Linux servers. The installation scripts should handle most of the dependencie management for you. But some of theme should be installed before deploying Pollux. The following requirements are needed to run the tool:
+
+> [!IMPORTANT]  
+> Ensure that you have the following prerequisites installed on your system before installing Pollux:
 
 - Python 3.12
 - Git (for installation only)
@@ -222,6 +249,29 @@ cd pollux
 poetry install
 poetry shell
 ```
+
+## Usage
+
+To use Pollux, you need to follow these steps:
+
+1. Configure the Pollux configuration object in the `config.py` file. This file is self-explanatory and contains all the configuration constants needed to run the tool. Please fill in the mandatory configuration constants and the optional ones if needed. If the file is configured wrongly, the Python wrapper will raise an error and stop the execution.
+
+2. Enable the python execution environment:
+
+```bash
+poetry shell
+```
+
+3. Run the main script:
+
+```bash
+poetry run python -m pollux.main
+```
+
+4. The script will generate a report in markdown format in the directory specified in the config object. This report will contain the results of the security audit.
+
+> [!TIP]
+> **Add-ons :** You can schedule the execution of the script using CRON or planned tasks. You can also modify the configuration object to add new scripts or modify the existing ones.
 
 ## Authors
 
