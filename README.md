@@ -25,6 +25,7 @@ __/\\\\\\\\\\\\\__________________/\\\\\\_____/\\\\\\___________________________
     - [Pollux Scripts](#pollux-scripts)
     - [Pollux Report](#pollux-report)
   - [Repository Structure](#repository-structure)
+  - [Infrastructures](#infrastructures)
 - [Installation](#installation)
   - [Minimal Requirements](#minimal-requirements)
   - [Usage Installation](#usage-installation)
@@ -94,8 +95,9 @@ class PolluxConfig:
     # Example:     SCRIPT_LIST = ['firewallCheck', 'antivirusCheck', 'filesystemCheck', 'SessionCheck', 'PasswordPolicyCheck', 'PlannedTaskCheck', 'UpdateCheck']
     SCRIPT_LIST = ["antivirusCheck", "updateCheck", "envvarCheck"]
 ```
-> [!IMPORTANT] 
-> **Important :** Some scripts will require the definition of some configuration constants. Those constants must be defined in the configuration object. It will be explicity mentioned in the script documentation and in the constant documentation.
+
+> [!IMPORTANT]
+> Some scripts will require the definition of some configuration constants. Those constants must be defined in the configuration object. It will be explicity mentioned in the script documentation and in the constant documentation.
 
 #### Pollux Scripts
 
@@ -175,6 +177,10 @@ pollux/
 ├── LICENSE             #the license file
 └── README.md           #the main documentation file
 ```
+
+### Infrastructures
+
+For developing Pollux we needed to create multiple test environments to test the tool in different contexts. We make those environments available at: https://github.com/tristanqtn/Pollux-Infras. Since this content is not needed by the solution to run, we decided to put it in a separate repository, so that someone who wants to use Pollux doesn't have to download all the infrastructures.
 
 ## Installation
 
@@ -271,7 +277,7 @@ poetry run python -m pollux.main
 4. The script will generate a report in markdown format in the directory specified in the config object. This report will contain the results of the security audit.
 
 > [!TIP]
-> **Add-ons :** You can schedule the execution of the script using CRON or planned tasks. You can also modify the configuration object to add new scripts or modify the existing ones.
+> Add_ons: You can schedule the execution of the script using CRON or planned tasks. You can also modify the configuration object to add new scripts or modify the existing ones.
 
 ## Authors
 
