@@ -42,7 +42,6 @@ function Check-EnvVariables {
     # Write the results to the file
     $content += "***"
     $content | Out-File -FilePath $outputFile -Encoding UTF8
-    Write-Host "Environment variable check completed. Results saved to: $outputFile"
 }
 
 # Main Execution

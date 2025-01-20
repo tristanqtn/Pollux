@@ -10,7 +10,7 @@ class PolluxConfig:
     # Mandatory: Yes
     # Default:  OS = 'windows'
     #           OS = 'linux'
-    OS = "windows"
+    OS = "linux"
 
     # Type of session running Pollux
     # Type: boolean
@@ -18,7 +18,7 @@ class PolluxConfig:
     # Default: RUNNING_AS_ADMIN = 1; true running as root
     #          RUNNING_AS_ADMIN = 0; false running as user
     # Preferable: 1
-    RUNNING_AS_ADMIN = 0
+    RUNNING_AS_ADMIN = 1
 
     # The path for the temporary files (outputs of scripts)
     # Type: string
@@ -28,6 +28,12 @@ class PolluxConfig:
     TEMPORARY_FILE_LOCATION = ""  # Leave it empty, it will be set in the code
     LIN_TEMPORARY_FILE_LOCATION = "/tmp/pollux/"
     WIN_TEMPORARY_FILE_LOCATION = "C:\\Temp\\pollux\\"
+
+    # Temporary file location list
+    # Type: list[str]
+    # Mandatory: Yes
+    # Default: TEMPORARY_FILE_LIST = []
+    TEMPORARY_FILE_LIST = [] # Leave it empty, it will be set in the code
 
     # The path for the final audit report file
     # Type: string
@@ -42,7 +48,7 @@ class PolluxConfig:
     # Type: list[str]
     # Mandatory: Yes
     # Example:     SCRIPT_LIST = ['firewallCheck', 'antivirusCheck', 'filesystemCheck', 'SessionCheck', 'PasswordPolicyCheck', 'PlannedTaskCheck', 'UpdateCheck']
-    SCRIPT_LIST = ["antivirusCheck", "updateCheck", "envvarCheck"]
+    SCRIPT_LIST = ["antivirusCheck", "updateCheck", "envvarCheck", "sessionCheck"]
 
     # Extension of the script files
     # Type: string

@@ -5,24 +5,19 @@ from pollux.wrapper.initialize import (
     flush_temporary_files,
 )
 from pollux.wrapper.wrapper import (
-    execute_script_list_lin,
-    execute_script_list_win,
+    conduct_audit,
     verify_output_path,
+    terminate,
 )
-from pollux.config import PolluxConfig
 
 if __name__ == "__main__":
     logo()
     check_config()
     audit_to_conduct()
     verify_output_path()
+
     flush_temporary_files()
 
-    if PolluxConfig.OS == "windows":
-        for script in PolluxConfig.SCRIPT_LIST:
-            execute_script_list_win(script)
-    elif PolluxConfig.OS == "linux":
-        for script in PolluxConfig.SCRIPT_LIST:
-            execute_script_list_lin(script)
-    else:
-        print("OS not supported by Pollux.")
+    conduct_audit()
+    
+    terminate()
