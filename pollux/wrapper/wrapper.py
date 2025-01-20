@@ -77,7 +77,7 @@ def conduct_audit():
     :param: None
     :return: None
     """
-    print("===================== POLLUX RUNNING SCRIPTS ====================")
+    print("======================== Pollux Audit ===========================")
     if PolluxConfig.OS == "windows":
         for script in PolluxConfig.SCRIPT_LIST:
             execute_script_list_win(script)
@@ -86,15 +86,41 @@ def conduct_audit():
             execute_script_list_lin(script)
     else:
         print("OS not supported by Pollux.")
-
-def terminate():
-    """
-    Terminate the script.
-
-    :param: None
-    :return: None
-    """
     print("\nAll scripts executed. The temporary files are stored in : ", )
     for file in PolluxConfig.TEMPORARY_FILE_LIST:
         print(file)
     print("=================================================================\n")
+
+def compute_delta():
+    """
+    Compute the delta between the old and new audit reports.
+
+    :param: None
+    :return: None
+    """
+    print("===================== Pollux Delta ==============================")
+    for report in PolluxConfig.SCRIPT_LIST:
+        old_report_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, str("old_" + report + ".tmp"))
+        new_report_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, str(report + ".tmp"))
+
+        if os.path.exists(old_report_path) and os.path.exists(new_report_path):
+            print(f"Delta computation :{report}")
+            with open(old_report_path, 'r') as old_file, open(new_report_path, 'r') as new_file:
+                old_data = old_file.readlines()
+                new_data = new_file.readlines()
+
+            differences = [line for line in new_data if line not in old_data]
+
+            if differences:
+                print(f"Differences found in {report}:")
+                for diff in differences:
+                    print("\t\t" + diff.strip())
+                print("\n")
+            else:
+                print(f"No differences found in {report}.\n")
+        else:
+            print(f"No old report found for {report}.\n" )
+            # Placeholder for creating new report logic
+            # create_new_report_logic(new_report_path)
+    print("=================================================================\n")
+

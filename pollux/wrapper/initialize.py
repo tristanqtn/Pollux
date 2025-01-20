@@ -86,8 +86,6 @@ def audit_to_conduct():
     print("Audit to conduct:")
     for script in PolluxConfig.SCRIPT_LIST:
         print(script)
-
-    print("\nTemporary file location :", PolluxConfig.TEMPORARY_FILE_LOCATION)
     print("=================================================================\n")
 
 
@@ -112,4 +110,53 @@ def flush_temporary_files():
             print("Deleting :", file)
             os.remove(PolluxConfig.TEMPORARY_FILE_LOCATION + file)
         print("Temporary files flushed.")
+    print("=================================================================\n")
+
+def flush_old_temporary_files():
+    """
+    Flush the temporary files in the temporary file location.
+    """
+    print("======================== Pollux Cleanup =========================")
+    if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
+        print("Temporary file location not set. Exiting.")
+    elif PolluxConfig.RUNNING_AS_ADMIN == 0 and PolluxConfig.OS == "linux":
+        print(
+            "Need to be root to flush temporary files in :",
+            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        )
+    else:
+        print(
+            "Flushing temporary files from previous runs in :",
+            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        )
+        for file in os.listdir(PolluxConfig.TEMPORARY_FILE_LOCATION):
+            if file.startswith("old_"):
+                print("Deleting :", file)
+                os.remove(PolluxConfig.TEMPORARY_FILE_LOCATION + file)
+    print("=================================================================\n")
+
+
+def stash_temporary_file():
+    """
+    Transform all the temporary files in the temporary file location to old ones.
+    """
+    print("======================== Pollux Delta ===========================")
+    if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
+        print("Temporary file location not set. Exiting.")
+    elif PolluxConfig.RUNNING_AS_ADMIN == 0 and PolluxConfig.OS == "linux":
+        print(
+            "Need to be root to stash temporary files in :",
+            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        )
+    else:
+        print(
+            "Stashing temporary files from previous runs in :",
+            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        )
+        for file in os.listdir(PolluxConfig.TEMPORARY_FILE_LOCATION):
+            print("Stashing :", file)
+            os.rename(
+                PolluxConfig.TEMPORARY_FILE_LOCATION + file,
+                PolluxConfig.TEMPORARY_FILE_LOCATION + "old_" + file,
+            )
     print("=================================================================\n")
