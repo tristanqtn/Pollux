@@ -8,6 +8,8 @@ from pollux.wrapper.executors.win_executors import (
     execute_envvar_check_win,
     execute_session_check_win,
     execute_planned_task_check_win,
+    execute_file_system_check_win,
+    execute_password_check_win,
 )
 from pollux.wrapper.executors.lin_executors import (
     execute_antivirus_check_lin,
@@ -16,6 +18,7 @@ from pollux.wrapper.executors.lin_executors import (
     execute_session_check_lin,
     execute_planned_task_check_lin,
     execute_file_system_check_lin,
+    execute_password_check_lin,
 )
 
 
@@ -52,6 +55,10 @@ def execute_script_list_win(script_list):
         execute_session_check_win()
     elif "plannedtaskCheck" in script_list:
         execute_planned_task_check_win()
+    elif "passwordCheck" in script_list:
+        execute_password_check_win()
+    elif "filesystemCheck" in script_list:
+        execute_file_system_check_win()
     else:
         print(f"Script {script_list} not available.")
 
@@ -76,6 +83,8 @@ def execute_script_list_lin(script_list):
         execute_planned_task_check_lin()
     elif "filesystemCheck" in script_list:
         execute_file_system_check_lin()
+    elif "passwordCheck" in script_list:
+        execute_password_check_lin()
     else:
         print(f"Script {script_list} not available.")
 
@@ -95,7 +104,7 @@ def conduct_audit():
             execute_script_list_lin(script)
     else:
         print("OS not supported by Pollux.")
-    print("\nAll scripts executed. The temporary files are stored in : ", )
+    print("\nAll scripts executed. The temporary files are stored in : ")
     for file in PolluxConfig.TEMPORARY_FILE_LIST:
         print(file)
     print("=================================================================\n")
