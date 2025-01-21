@@ -7,12 +7,14 @@ from pollux.wrapper.executors.win_executors import (
     execute_updates_check_win,
     execute_envvar_check_win,
     execute_session_check_win,
+    execute_planned_task_check_win,
 )
 from pollux.wrapper.executors.lin_executors import (
     execute_antivirus_check_lin,
     execute_update_check_lin,
     execute_envvar_check_lin,
     execute_session_check_lin,
+    execute_planned_task_check_lin,
 )
 
 
@@ -47,6 +49,8 @@ def execute_script_list_win(script_list):
         execute_envvar_check_win()
     elif "sessionCheck" in script_list:
         execute_session_check_win()
+    elif "plannedtaskCheck" in script_list:
+        execute_planned_task_check_win()
     else:
         print(f"Script {script_list} not available.")
 
@@ -67,6 +71,8 @@ def execute_script_list_lin(script_list):
         execute_envvar_check_lin()
     elif "sessionCheck" in script_list:
         execute_session_check_lin()
+    elif "plannedtaskCheck" in script_list:
+        execute_planned_task_check_lin()
     else:
         print(f"Script {script_list} not available.")
 
@@ -140,9 +146,11 @@ def compute_delta():
             print(f"Missing old or new report for {report}.\n")
 
     print("\n===")
-    print("Delta computation completed. The delta files are stored in : ")
-    for file in PolluxConfig.DELTA_FILE_LIST:
-        print(file)
+    print("Delta computation completed.")
+    if(PolluxConfig.DELTA_FILE_LIST):
+        print("The delta files are stored in : ")
+        for file in PolluxConfig.DELTA_FILE_LIST:
+            print(file)
     print("=================================================================\n")
 
 

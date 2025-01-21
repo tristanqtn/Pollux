@@ -22,7 +22,7 @@ check_sessions() {
         who
         echo "***"
         # List user privileges and commands they can run as root
-        echo -e "\n##User privileges and sudo commands:"
+        echo -e "\n## User privileges and sudo commands:"
         for user in $(cut -f1 -d: /etc/passwd); do
             echo -e "\nUser: $user"
             sudo -lU $user

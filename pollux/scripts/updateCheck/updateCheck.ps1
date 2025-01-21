@@ -23,9 +23,6 @@ $updateSession = New-Object -ComObject Microsoft.Update.Session
 # Create an Update Searcher object
 $updateSearcher = $updateSession.CreateUpdateSearcher()
 
-# Search for available updates
-"Checking for updates..." | Out-File -FilePath $tmpFilePath -Append
-
 # Filter the updates for specific categories (e.g., security, feature updates)
 $searchResult = $updateSearcher.Search("IsInstalled=0")
 

@@ -18,8 +18,7 @@ if (-not (Test-Path (Split-Path $outputFile))) {
 function Check-EnvVariables {
     # Initialize content for the report
     $content = @(
-        "# Checking Environment Variables",
-        "Generated on: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')",
+        "## Checking Environment Variables",
         ""
     )
 

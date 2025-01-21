@@ -105,13 +105,13 @@ Those scripts are the core of the Pollux tool. They are meant to scan for a defi
 
 - Open ports information
 - Firewall & ACL configuration
-- Antivirus check
+- [x] Antivirus check
 - Filesystem permissions
-- Session permissions
+- [x] Session permissions
 - Password policy
-- Planned tasks
-- Security and package updates
-- Environment variables
+- [x] Planned tasks
+- [x] Security and package updates
+- [x] Environment variables
 - Restricted shells
 - Running services and processes
 
@@ -123,7 +123,7 @@ data
 data
 data
 ...
-****
+***
 ```
 
 An example of a script output is the following one:
@@ -133,13 +133,13 @@ An example of a script output is the following one:
 /etc/passwd
 /etc/shadow
 ...
-****
+***
 
 # Files with 755 permissions
 /usr/bin/python3
 /usr/bin/python3.12
 ...
-****
+***
 ```
 
 The temporary file are stored by default in the following path depending on your OS:

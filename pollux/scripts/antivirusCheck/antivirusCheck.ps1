@@ -23,10 +23,13 @@ function Log-Data {
 # Function to check Windows Defender status
 function Check-WindowsDefender {
     try {
+        Log-Data "## Windows Defender Information"
         # Check if Windows Defender is running
         $defenderStatus = Get-Service -Name "WinDefend" -ErrorAction Stop
         if ($defenderStatus.Status -ne "Running") {
             Log-Data "Windows Defender: Installed but not running."
+            Log-Data "***"
+            Log-Data ""
             return
         }
 
@@ -45,7 +48,10 @@ function Check-WindowsDefender {
         $scanInProgress = if ($scanStatus.QuickScanInProgress -or $scanStatus.FullScanInProgress) { "Yes" } else { "No" }
 
         Log-Data "Scan in Progress: $scanInProgress"
-    } catch {
+        Log-Data "***"
+        Log-Data ""
+    }
+    catch {
         Log-Data "ERROR: Unable to retrieve Windows Defender status."
     }
 }
@@ -53,6 +59,7 @@ function Check-WindowsDefender {
 # Function to check antivirus information
 function Check-AntivirusStatus {
     try {
+        Log-Data "## Antivirus Information"
         # Retrieve antivirus information
         $antivirusInfo = Get-CimInstance -Namespace "root/SecurityCenter2" -ClassName "AntivirusProduct" -ErrorAction Stop
 
@@ -65,7 +72,10 @@ function Check-AntivirusStatus {
             Log-Data "Antivirus: $($av.displayName)"
             Log-Data "Product Status: $($av.productState)"
         }
-    } catch {
+        Log-Data "***"
+        Log-Data ""
+    }
+    catch {
         Log-Data "ERROR: Unable to retrieve antivirus information."
     }
 }
@@ -73,10 +83,11 @@ function Check-AntivirusStatus {
 # Function to check recent antivirus scans
 function Check-AntivirusScans {
     try {
+        Log-Data "## Recent Antivirus Scans"
         # Retrieve recent scan logs
         $scanLogs = Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" `
-                                 -FilterXPath "*[System[(EventID=1000 or EventID=1001)]]" `
-                                 -MaxEvents 5
+            -FilterXPath "*[System[(EventID=1000 or EventID=1001)]]" `
+            -MaxEvents 5
 
         if (-not $scanLogs) {
             Log-Data "Recent Scans: None found."
@@ -92,7 +103,9 @@ function Check-AntivirusScans {
             Log-Data "Scan Result: $scanResult"
             Log-Data "Scan Time: $scanTime"
         }
-    } catch {
+        Log-Data "***"
+    }
+    catch {
         Log-Data "ERROR: Unable to retrieve scan logs."
     }
 }

@@ -23,6 +23,7 @@ handle_error() {
 
 # Function to detect installed antivirus software
 detect_antivirus() {
+    echo "## Antivirus Detection" >> "$output_file"
     declare -A antivirus_list
 
     # Known antivirus detection commands
@@ -45,14 +46,19 @@ detect_antivirus() {
     done
 
     if [ ${#installed_antivirus[@]} -eq 0 ]; then
-        handle_error "No antivirus software"
+        echo "No antivirus software" >> "$output_file"
+        echo "***" >> "$output_file"
+        #quit scan 
+        exit 0
     fi
 
     echo "Detected Antivirus: ${installed_antivirus[*]}" >> "$output_file"
+    echo "***" >> "$output_file"
 }
 
 # Function to check the status of antivirus services
 check_av_status() {
+    echo "## Antivirus Status" >> "$output_file"
     for av_name in "${installed_antivirus[@]}"; do
         case $av_name in
             "ClamAV")
@@ -123,10 +129,12 @@ check_av_status() {
                 ;;
         esac
     done
+    echo "***" >> "$output_file"
 }
 
 # Function to check for antivirus database updates
 check_database_updates() {
+    echo "## Antivirus Database Updates" >> "$output_file"
     for av_name in "${installed_antivirus[@]}"; do
         case $av_name in
             "ClamAV")
@@ -148,11 +156,13 @@ check_database_updates() {
                 ;;
         esac
     done
+    echo "***" >> "$output_file"
 }
 
 
 # Function to check for scheduled scans
 check_scheduled_scans() {
+    echo "## Scheduled Scans" >> "$output_file"
     for av_name in "${installed_antivirus[@]}"; do
         # Check user crontab
         if crontab -l 2>/dev/null | grep -i "${av_name,,}" &> /dev/null; then
@@ -175,6 +185,7 @@ check_scheduled_scans() {
             echo "$av_name Scheduled Scan: Not Found in System-Wide Crons" >> "$output_file"
         fi
     done
+    echo "***" >> "$output_file"
 }
 
 

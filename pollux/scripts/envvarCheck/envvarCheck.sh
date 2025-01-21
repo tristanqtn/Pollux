@@ -15,10 +15,7 @@ mkdir -p "$(dirname "$OUTPUT_SCRIPT")"
 check_env_variables() {
     # Create the report file
     {
-        echo "# Checking Environment Variables"
-        echo "Generated on: $(date)"
-        echo ""
-
+        echo "## Checking Environment Variables"
         # Loop through environment variables
         for var in $(printenv | cut -d= -f1); do
             value=$(printenv "$var")
