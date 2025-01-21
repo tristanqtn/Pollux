@@ -10,7 +10,7 @@ Pollux is made of a Python wrapper that orchestrate the scripts execution. The s
 
 ### Technologies
 
-- Python 3.12
+- Python 3.11
 - Poetry
 - Bash, Powershell scripts
 

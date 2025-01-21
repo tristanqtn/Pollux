@@ -103,17 +103,17 @@ class PolluxConfig:
 
 Those scripts are the core of the Pollux tool. They are meant to scan for a defined perimeter and gather information about the server. The scripts are written in Python, Powershell or Bash. They can be independent or depend on each other. The results of the scripts are stored in a temporary file. Here's a list of the scripts:
 
-- Open ports information
-- Firewall & ACL configuration
+- [ ] Open ports information
+- [ ] Firewall & ACL configuration
 - [x] Antivirus check
-- Filesystem permissions
+- [x] Filesystem permissions
 - [x] Session permissions
-- Password policy
+- [x] Password policy
 - [x] Planned tasks
 - [x] Security and package updates
 - [x] Environment variables
-- Restricted shells
-- Running services and processes
+- [ ] Restricted shells
+- [ ] Running services and processes
 
 All scripts should produce a consistant output in order to easily produce the final report. The temporary file containing the result of the script should have the name of the script and the extension `.tmp`. For a same script multiple piece of information can be gathered. The output format is the following one:
 
@@ -193,7 +193,7 @@ The Pollux tool is ment to be used on Windows and Linux servers. The installatio
 > [!IMPORTANT]  
 > Ensure that you have the following prerequisites installed on your system before installing Pollux:
 
-- Python 3.12
+- Python 3.11
 - Git (for installation only)
 
 ### Usage Installation
