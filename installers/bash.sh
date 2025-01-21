@@ -26,9 +26,11 @@ fi
 # Check for Poetry
 if ! command -v poetry &> /dev/null
 then
-    echo "Poetry is not installed. Installing Poetry..."
+    echo "Poetry is not installed or not in PATH. Installing Poetry locally..."
     # Add your Poetry installation logic here
     curl -sSL https://install.python-poetry.org | python3 -
+    # Add Poetry to PATH
+    export PATH=$PATH:$HOME/.local/bin
 else
     echo "Poetry is already installed."
 fi

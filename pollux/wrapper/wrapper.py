@@ -15,6 +15,7 @@ from pollux.wrapper.executors.lin_executors import (
     execute_envvar_check_lin,
     execute_session_check_lin,
     execute_planned_task_check_lin,
+    execute_file_system_check_lin,
 )
 
 
@@ -73,6 +74,8 @@ def execute_script_list_lin(script_list):
         execute_session_check_lin()
     elif "plannedtaskCheck" in script_list:
         execute_planned_task_check_lin()
+    elif "filesystemCheck" in script_list:
+        execute_file_system_check_lin()
     else:
         print(f"Script {script_list} not available.")
 
