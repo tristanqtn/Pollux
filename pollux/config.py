@@ -10,7 +10,7 @@ class PolluxConfig:
     # Mandatory: Yes
     # Default:  OS = 'windows'
     #           OS = 'linux'
-    OS = "windows"
+    OS = "linux"
 
     # Type of session running Pollux
     # Type: boolean
@@ -33,7 +33,7 @@ class PolluxConfig:
     # Type: list[str]
     # Mandatory: Yes
     # Default: TEMPORARY_FILE_LIST = []
-    TEMPORARY_FILE_LIST = [] # Leave it empty, it will be set in the code
+    TEMPORARY_FILE_LIST = ["antivirusCheck.tmp","envvarCheck.tmp","sessionCheck.tmp","updateCheck.tmp"] # Leave it empty, it will be set in the code
 
     # Deta file location list
     # Type: list[str]
