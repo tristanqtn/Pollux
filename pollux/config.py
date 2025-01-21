@@ -35,6 +35,12 @@ class PolluxConfig:
     # Default: TEMPORARY_FILE_LIST = []
     TEMPORARY_FILE_LIST = [] # Leave it empty, it will be set in the code
 
+    # Deta file location list
+    # Type: list[str]
+    # Mandatory: Yes
+    # Default: DELTA_FILE_LIST = []
+    DELTA_FILE_LIST = [] # Leave it empty, it will be set in the code
+
     # The path for the final audit report file
     # Type: string
     # Mandatory: Yes

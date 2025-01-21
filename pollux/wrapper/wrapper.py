@@ -91,36 +91,58 @@ def conduct_audit():
         print(file)
     print("=================================================================\n")
 
+
 def compute_delta():
     """
-    Compute the delta between the old and new audit reports.
+    Compute the delta between the old and new audit reports and save the results to files.
 
     :param: None
     :return: None
     """
     print("===================== Pollux Delta ==============================")
     for report in PolluxConfig.SCRIPT_LIST:
-        old_report_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, str("old_" + report + ".tmp"))
-        new_report_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, str(report + ".tmp"))
+        old_report_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, f"old_{report}.tmp")
+        new_report_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, f"{report}.tmp")
+        delta_output_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, f"delta_{report}.tmp")
 
         if os.path.exists(old_report_path) and os.path.exists(new_report_path):
-            print(f"Delta computation :{report}")
+            print(f"Delta computation: {report}")
             with open(old_report_path, 'r') as old_file, open(new_report_path, 'r') as new_file:
-                old_data = old_file.readlines()
-                new_data = new_file.readlines()
+                old_data = set(old_file.readlines())
+                new_data = set(new_file.readlines())
 
-            differences = [line for line in new_data if line not in old_data]
+            # Detect new lines and removed lines
+            added_lines = new_data - old_data
+            removed_lines = old_data - new_data
 
-            if differences:
+            if added_lines or removed_lines:
                 print(f"Differences found in {report}:")
-                for diff in differences:
-                    print("\t\t" + diff.strip())
-                print("\n")
+                with open(delta_output_path, 'w') as delta_file:
+                    if added_lines:
+                        print("\tAdded lines:")
+                        delta_file.write("## Added lines:\n")
+                        for line in added_lines:
+                            print("\t\t" + line.strip())
+                            delta_file.write(line)
+                        delta_file.write("***\n")
+                    if removed_lines:
+                        print("\tRemoved lines:")
+                        delta_file.write("\n## Removed lines:\n")
+                        for line in removed_lines:
+                            print("\t\t" + line.strip())
+                            delta_file.write(line)
+                        delta_file.write("***\n")
+                print(f"Delta saved to {delta_output_path}\n")
+                PolluxConfig.DELTA_FILE_LIST.append(delta_output_path)
             else:
                 print(f"No differences found in {report}.\n")
         else:
-            print(f"No old report found for {report}.\n" )
-            # Placeholder for creating new report logic
-            # create_new_report_logic(new_report_path)
+            print(f"Missing old or new report for {report}.\n")
+
+    print("\n===")
+    print("Delta computation completed. The delta files are stored in : ")
+    for file in PolluxConfig.DELTA_FILE_LIST:
+        print(file)
     print("=================================================================\n")
+
 
