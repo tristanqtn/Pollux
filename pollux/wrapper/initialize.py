@@ -38,7 +38,7 @@ def check_config():
     :return: None
     """
     print("======================== Pollux Config ==========================")
-    print("Pollux configuration:\n")
+    print("Pollux configuration :\n")
     if PolluxConfig.OS != detect_os():
         print("The current OS is different from the one configured in Pollux.")
         exit(1)
@@ -59,33 +59,27 @@ def check_config():
                         PolluxConfig.WIN_TEMPORARY_FILE_LOCATION
                     )
                     PolluxConfig.SCRIPT_EXTENSION = ".ps1"
+                    PolluxConfig.REPORT_FILE_LOCATION = (
+                        PolluxConfig.WIN_REPORT_FILE_LOCATION
+                    )
                 elif PolluxConfig.OS == "linux":
                     PolluxConfig.TEMPORARY_FILE_LOCATION = (
                         PolluxConfig.LIN_TEMPORARY_FILE_LOCATION
                     )
                     PolluxConfig.SCRIPT_EXTENSION = ".sh"
-                print(
-                    "Temporary file location set to :",
-                    PolluxConfig.TEMPORARY_FILE_LOCATION,
-                )
+                    PolluxConfig.REPORT_FILE_LOCATION = (
+                        PolluxConfig.LIN_REPORT_FILE_LOCATION
+                    )
             else:
                 print(
                     "Temporary file location (make sure to match your OS filesystem):",
                     PolluxConfig.TEMPORARY_FILE_LOCATION,
                 )
-            print("\nThe current environment matches the one configured in Pollux.")
+
+            PolluxConfig.display_config()
+
+            print("The current environment matches the one configured in Pollux.")
             print("Everything OK, Pollux is ready to run.")
-    print("=================================================================\n")
-
-
-def audit_to_conduct():
-    """
-    Print the audit to conduct based on the configuration.
-    """
-    print("======================== Pollux Audit ===========================")
-    print("Audit to conduct:")
-    for script in PolluxConfig.SCRIPT_LIST:
-        print(script)
     print("=================================================================\n")
 
 
@@ -111,6 +105,7 @@ def flush_temporary_files():
             os.remove(PolluxConfig.TEMPORARY_FILE_LOCATION + file)
         print("Temporary files flushed.")
     print("=================================================================\n")
+
 
 def flush_old_temporary_files():
     """

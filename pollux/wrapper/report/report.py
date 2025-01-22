@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 from pollux.config import PolluxConfig
 
-output_file = "POLLUX_REPORT.md"
 
 def get_current_timestamp():
     """
@@ -12,6 +11,7 @@ def get_current_timestamp():
     date_str = now.strftime("%Y-%m-%d")
     timestamp_str = now.strftime("%Y-%m-%d %H:%M:%S")
     return date_str, timestamp_str
+
 
 def process_file_blocks(file_path):
     """
@@ -49,7 +49,8 @@ def process_file_blocks(file_path):
 
     return blocks
 
-#def get_pollux_config_details():
+
+# def get_pollux_config_details():
 #    """
 #    Adding POLLUX configuration details to the report.
 #    """
@@ -63,6 +64,7 @@ def process_file_blocks(file_path):
 #        f"- **Legitimate Users**: {', '.join(config.LEGITIMATE_USERS) or 'None'}\n",
 #    ]
 #    return "\n".join(config_details)
+
 
 def generate_md_report(file_list, delta_list, output_file):
     """
@@ -79,8 +81,7 @@ def generate_md_report(file_list, delta_list, output_file):
         f"_Date: {date}_\n",
         f"_Timestamp: {timestamp}_\n",
         "The POLLUX project is open source and licensed by MIT. As a reminder, it does not comply with any official standard or recommendation, and does not guarantee the security of the infrastructure tested.\n",
-        "---\n"
-        "### DIFFENCE(S) WITH LAST LAUNCH OF POLLUX"
+        "---\n" "### DIFFENCE(S) WITH LAST LAUNCH OF POLLUX",
     ]
 
     """
@@ -90,7 +91,7 @@ def generate_md_report(file_list, delta_list, output_file):
 
     if not delta_list:
         report_content.append("NO PREVIOUS FILE FOUND\n")
-    else: 
+    else:
         for file_path in sorted(delta_list):
             file_name = os.path.basename(file_path)
             try:
@@ -105,44 +106,36 @@ def generate_md_report(file_list, delta_list, output_file):
             except Exception as e:
                 report_content.append(f"#### Error processing {file_name}: {e}\n")
 
-    report_content.append(
-        "### END OF DELTA\n"
-        "\n"
-        "---\n"
-        "\n"
-        "### CONTENT\n"
-    )
+    report_content.append("### END OF DELTA\n" "\n" "---\n" "\n" "### CONTENT\n")
 
     for file_name in sorted(file_list):
-            file_path = os.path.join(PolluxConfig.LIN_TEMPORARY_FILE_LOCATION, file_name)
-            try:
-                blocks = process_file_blocks(file_path)
-                if blocks:
-                    report_content.append(f"#### Content from {file_name}\n")
-                    for block in blocks:
-                        report_content.append(block)
-                        report_content.append("\n")
-                else:
-                    report_content.append(f"#### No relevant content in {file_name}\n")
-            except Exception as e:
-                report_content.append(f"#### Error processing {file_name}: {e}\n")
+        file_path = os.path.join(PolluxConfig.LIN_TEMPORARY_FILE_LOCATION, file_name)
+        try:
+            blocks = process_file_blocks(file_path)
+            if blocks:
+                report_content.append(f"#### Content from {file_name}\n")
+                for block in blocks:
+                    report_content.append(block)
+                    report_content.append("\n")
+            else:
+                report_content.append(f"#### No relevant content in {file_name}\n")
+        except Exception as e:
+            report_content.append(f"#### Error processing {file_name}: {e}\n")
 
     report_content.append("### END OF CONTENT\n\n")
 
-#    report_content.extend([
-#        "### ANNEXES\n",
-#        "#### Configuration\n",
-#        get_pollux_config_details(),
-#        "\n",
-#    ])
+    #    report_content.extend([
+    #        "### ANNEXES\n",
+    #        "#### Configuration\n",
+    #        get_pollux_config_details(),
+    #        "\n",
+    #    ])
 
     with open(output_file, "w") as report_file:
         report_file.write("\n".join(report_content))
 
     print(f"Report generated: {output_file}")
 
-if __name__ == "__main__":
-    generate_md_report(PolluxConfig.TEMPORARY_FILE_LIST,PolluxConfig.DELTA_FILE_LIST,output_file)
 
 """
 Format of the report : 
@@ -152,4 +145,23 @@ recap page(s) (delta)
 Content page(s)
 Annexes
 
+"""
+
+"""
+Une fois le premier rapport généré, on le transforme en PDF ?
+--> PDF par famille
+
+markdown2pdf
+#Pb updates
+#pb rights
+    -users
+    -files
+#Systeme
+    -env
+    -cron
+    -shells restreints
+
+#Rézo
+    -ports
+    -firewall/ACL
 """

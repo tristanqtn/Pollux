@@ -21,6 +21,8 @@ from pollux.wrapper.executors.lin_executors import (
     execute_password_check_lin,
 )
 
+from pollux.wrapper.report.report import generate_md_report
+
 
 def verify_output_path():
     """
@@ -88,6 +90,7 @@ def execute_script_list_lin(script_list):
     else:
         print(f"Script {script_list} not available.")
 
+
 def conduct_audit():
     """
     Conduct the audit by executing the scripts in the script list.
@@ -119,13 +122,22 @@ def compute_delta():
     """
     print("===================== Pollux Delta ==============================")
     for report in PolluxConfig.SCRIPT_LIST:
-        old_report_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, f"old_{report}.tmp")
-        new_report_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, f"{report}.tmp")
-        delta_output_path = os.path.join(PolluxConfig.TEMPORARY_FILE_LOCATION, f"delta_{report}.tmp")
+        old_report_path = os.path.join(
+            PolluxConfig.TEMPORARY_FILE_LOCATION, f"old_{report}.tmp"
+        )
+        new_report_path = os.path.join(
+            PolluxConfig.TEMPORARY_FILE_LOCATION, f"{report}.tmp"
+        )
+        delta_output_path = os.path.join(
+            PolluxConfig.TEMPORARY_FILE_LOCATION, f"delta_{report}.tmp"
+        )
 
         if os.path.exists(old_report_path) and os.path.exists(new_report_path):
             print(f"Delta computation: {report}")
-            with open(old_report_path, 'r') as old_file, open(new_report_path, 'r') as new_file:
+            with (
+                open(old_report_path, "r") as old_file,
+                open(new_report_path, "r") as new_file,
+            ):
                 old_data = set(old_file.readlines())
                 new_data = set(new_file.readlines())
 
@@ -135,7 +147,7 @@ def compute_delta():
 
             if added_lines or removed_lines:
                 print(f"Differences found in {report}:")
-                with open(delta_output_path, 'w') as delta_file:
+                with open(delta_output_path, "w") as delta_file:
                     if added_lines:
                         print("\tAdded lines:")
                         delta_file.write("## Added lines:\n")
@@ -157,12 +169,26 @@ def compute_delta():
         else:
             print(f"Missing old or new report for {report}.\n")
 
-    print("\n===")
     print("Delta computation completed.")
-    if(PolluxConfig.DELTA_FILE_LIST):
+    if PolluxConfig.DELTA_FILE_LIST:
         print("The delta files are stored in : ")
         for file in PolluxConfig.DELTA_FILE_LIST:
             print(file)
     print("=================================================================\n")
 
 
+def create_report():
+    """
+    Create the final audit report by combining the audit reports and delta reports.
+
+    :param: None
+    :return: None
+    """
+    print("======================== Pollux Report ==========================")
+    output_file = os.path.join(
+        PolluxConfig.REPORT_FILE_LOCATION, PolluxConfig.REPORT_FILE_NAME
+    )
+    generate_md_report(
+        PolluxConfig.TEMPORARY_FILE_LIST, PolluxConfig.DELTA_FILE_LIST, output_file
+    )
+    print("=================================================================\n")
