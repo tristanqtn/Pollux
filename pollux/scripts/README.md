@@ -13,3 +13,5 @@ This directory contains scripts that to be executed on the audited device. Those
 | filesystemCheck  | This script checks the filesystem of the device and searches for files with sensitive information or unusual permissions. |  [filesystemCheck](filesystemCheck/README.md)  |
 |  passwordCheck   |                   This script checks the password policy of the device and searches for weak passwords.                   |    [passwordCheck](passwordCheck/README.md)    |
 | plannedTaskCheck |   This script checks the planned tasks on the device and searches for tasks that could be used for malicious purposes.    | [plannedTaskCheck](plannedTaskCheck/README.md) |
+|  firewallCheck   |   This script checks the firewall rules on the device and searches for rules that could be used for malicious purposes.   |    [firewallCheck](firewallCheck/README.md)    |
+|    portCheck     |     This script checks the open ports on the device and searches for ports that could be used for malicious purposes.     |        [portCheck](portCheck/README.md)        |

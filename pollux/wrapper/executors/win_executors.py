@@ -12,6 +12,8 @@ WIN_SCRIPT_PATH = {
     "plannedtaskCheck": "\\pollux\\scripts\\plannedtaskCheck\\plannedtaskCheck",
     "filesystemCheck": "\\pollux\\scripts\\filesystemCheck\\filesystemCheck",
     "passwordCheck": "\\pollux\\scripts\\passwordCheck\\passwordCheck",
+    "portCheck": "\\pollux\\scripts\\portCheck\\portCheck",
+    "firewallCheck": "\\pollux\\scripts\\firewallCheck\\firewallCheck",
 }
 
 
@@ -195,6 +197,69 @@ def execute_file_system_check_win(script_name="filesystemCheck"):
 def execute_password_check_win(script_name="passwordCheck"):
     """
     Execute the planned task check script for Windows.
+    This script requires root privileges to run.
+
+    :param script_name: name of the script to execute
+    :default script_name: sessionCheck
+    :type script_name: str
+    :return: None
+    """
+
+    # Check if the script is running as root
+    if PolluxConfig.RUNNING_AS_ADMIN == 0:
+        print("Please run the script as an administrator.")
+        return
+    full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
+    # Check if the path to the script exists
+    if check_path_exists(full_path):
+        print(f"Path to script exists : {full_path}")
+    else:
+        print(f"Path to script does not exist : {full_path}")
+        return
+    if full_path is None:
+        print(f"Script {script_name} not found.")
+        return
+    # Define the logfile
+    Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
+    PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
+    # Execute the script
+    os.system(f"powershell.exe {full_path} {Logfile}")
+
+
+def execute_port_check_win(script_name="portCheck"):
+    """
+    Execute the port scanning check script for Windows.
+    This script requires root privileges to run.
+
+    :param script_name: name of the script to execute
+    :default script_name: sessionCheck
+    :type script_name: str
+    :return: None
+    """
+
+    # Check if the script is running as root
+    if PolluxConfig.RUNNING_AS_ADMIN == 0:
+        print("Please run the script as an administrator.")
+        return
+    full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
+    # Check if the path to the script exists
+    if check_path_exists(full_path):
+        print(f"Path to script exists : {full_path}")
+    else:
+        print(f"Path to script does not exist : {full_path}")
+        return
+    if full_path is None:
+        print(f"Script {script_name} not found.")
+        return
+    # Define the logfile
+    Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
+    PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
+    # Execute the script
+    os.system(f"powershell.exe {full_path} {Logfile}")
+
+def execute_firewall_check_win(script_name="firewallCheck"):
+    """
+    Execute the port scanning check script for Windows.
     This script requires root privileges to run.
 
     :param script_name: name of the script to execute

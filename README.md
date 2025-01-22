@@ -103,8 +103,8 @@ class PolluxConfig:
 
 Those scripts are the core of the Pollux tool. They are meant to scan for a defined perimeter and gather information about the server. The scripts are written in Python, Powershell or Bash. They can be independent or depend on each other. The results of the scripts are stored in a temporary file. Here's a list of the scripts:
 
-- [ ] Open ports information
-- [ ] Firewall & ACL configuration
+- [x] Open ports information
+- [x] Firewall & ACL configuration
 - [x] Antivirus check
 - [x] Filesystem permissions
 - [x] Session permissions

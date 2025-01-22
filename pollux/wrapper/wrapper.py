@@ -10,6 +10,8 @@ from pollux.wrapper.executors.win_executors import (
     execute_planned_task_check_win,
     execute_file_system_check_win,
     execute_password_check_win,
+    execute_port_check_win,
+    execute_firewall_check_win,
 )
 from pollux.wrapper.executors.lin_executors import (
     execute_antivirus_check_lin,
@@ -19,6 +21,8 @@ from pollux.wrapper.executors.lin_executors import (
     execute_planned_task_check_lin,
     execute_file_system_check_lin,
     execute_password_check_lin,
+    execute_port_check_lin,
+    execute_firewall_check_lin,
 )
 
 from pollux.wrapper.report.report import generate_md_report
@@ -61,6 +65,10 @@ def execute_script_list_win(script_list):
         execute_password_check_win()
     elif "filesystemCheck" in script_list:
         execute_file_system_check_win()
+    elif "portCheck" in script_list:
+        execute_port_check_win()
+    elif "firewallCheck" in script_list:
+        execute_firewall_check_win()
     else:
         print(f"Script {script_list} not available.")
 
@@ -87,6 +95,10 @@ def execute_script_list_lin(script_list):
         execute_file_system_check_lin()
     elif "passwordCheck" in script_list:
         execute_password_check_lin()
+    elif "portCheck" in script_list:
+        execute_port_check_lin()
+    elif "firewallCheck" in script_list:
+        execute_firewall_check_lin()
     else:
         print(f"Script {script_list} not available.")
 

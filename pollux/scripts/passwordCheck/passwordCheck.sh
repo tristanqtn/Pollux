@@ -54,4 +54,3 @@ function audit_password_policies() {
 
 # Main execution
 audit_password_policies
-echo "Password policy audit completed. Results saved to $output_file."
