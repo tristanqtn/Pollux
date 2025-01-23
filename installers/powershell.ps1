@@ -31,6 +31,7 @@ if (-not $poetry) {
     Invoke-WebRequest -Uri "https://install.python-poetry.org" -OutFile "install-poetry.py"
     python3 install-poetry.py
     Remove-Item -Path "install-poetry.py"
+    $env:Path += ";$env:APPDATA\Python\Scripts"
 }
 else {
     Write-Output "Poetry is already installed."

@@ -192,7 +192,7 @@ The Pollux tool is ment to be used on Windows and Linux servers. The installatio
 > [!IMPORTANT]  
 > Ensure that you have the following prerequisites installed on your system before installing Pollux:
 
-- Python 3.11
+- Python 3.10
 - Git (for installation only)
 
 ### Usage Installation
