@@ -112,13 +112,12 @@ Those scripts are the core of the Pollux tool. They are meant to scan for a defi
 - [x] Planned tasks
 - [x] Security and package updates
 - [x] Environment variables
-- [ ] Restricted shells
-- [ ] Running services and processes
+- [ ] Running services
 
 All scripts should produce a consistant output in order to easily produce the final report. The temporary file containing the result of the script should have the name of the script and the extension `.tmp`. For a same script multiple piece of information can be gathered. The output format is the following one:
 
 ```plaintext
-# Piece of information
+## Piece of information
 data
 data
 data
@@ -129,13 +128,13 @@ data
 An example of a script output is the following one:
 
 ```plaintext
-# Files with 777 permissions
+## Files with 777 permissions
 /etc/passwd
 /etc/shadow
 ...
 ***
 
-# Files with 755 permissions
+## Files with 755 permissions
 /usr/bin/python3
 /usr/bin/python3.12
 ...

@@ -232,6 +232,7 @@ def execute_password_check_lin(script_name="passwordCheck"):
     # Execute the script
     os.system(f"bash {full_path} {Logfile}")
 
+
 def execute_port_check_lin(script_name="portCheck"):
     """
     Execute the planned task check script for Linux.

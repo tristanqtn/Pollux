@@ -257,6 +257,7 @@ def execute_port_check_win(script_name="portCheck"):
     # Execute the script
     os.system(f"powershell.exe {full_path} {Logfile}")
 
+
 def execute_firewall_check_win(script_name="firewallCheck"):
     """
     Execute the port scanning check script for Windows.

@@ -9,88 +9,91 @@ if (-not $LogFile) {
     exit
 }
 
-# Clear the log file if it exists
-if (Test-Path $LogFile) { Remove-Item $LogFile }
-
-# Function to log essential data
-function Log-Data {
-    param (
-        [string]$Data
-    )
-    $Data | Out-File -FilePath $LogFile -Append
+# Ensure the directory exists
+if (-not (Test-Path (Split-Path $LogFile))) {
+    New-Item -ItemType Directory -Path (Split-Path $LogFile) -Force | Out-Null
 }
 
 # Function to check Windows Defender status
 function Check-WindowsDefender {
     try {
-        Log-Data "## Windows Defender Information"
+        $content = @(
+            "## Windows Defender Information",
+            ""
+        )
+
         # Check if Windows Defender is running
         $defenderStatus = Get-Service -Name "WinDefend" -ErrorAction Stop
         if ($defenderStatus.Status -ne "Running") {
-            Log-Data "Windows Defender: Installed but not running."
-            Log-Data "***"
-            Log-Data ""
+            $content += "Windows Defender: Installed but not running."
+            $content += "***"
+            $content += ""
+            $content | Out-File -FilePath $LogFile -Append -Encoding UTF8
             return
         }
 
-        Log-Data "Windows Defender: Running."
-
-        # Check antivirus definition status
-        $definitions = Get-MpComputerStatus -ErrorAction Stop | Select-Object -Property AntivirusSignatureLastUpdated, AntivirusSignatureVersion
-        $lastUpdated = $definitions.AntivirusSignatureLastUpdated
-        $signatureVersion = $definitions.AntivirusSignatureVersion
-
-        Log-Data "Last Updated: $lastUpdated"
-        Log-Data "Version: $signatureVersion"
+        $content += "Windows Defender: Running"
+        $signatureVersion = (Get-MpComputerStatus -ErrorAction Stop).AMEngineVersion
+        $content += "Version: $signatureVersion"
 
         # Check for ongoing scans
         $scanStatus = Get-MpComputerStatus -ErrorAction Stop | Select-Object -Property QuickScanInProgress, FullScanInProgress
         $scanInProgress = if ($scanStatus.QuickScanInProgress -or $scanStatus.FullScanInProgress) { "Yes" } else { "No" }
 
-        Log-Data "Scan in Progress: $scanInProgress"
-        Log-Data "***"
-        Log-Data ""
+        $content += "Scan in Progress: $scanInProgress"
+        $content += "***"
+        $content += ""
+        $content | Out-File -FilePath $LogFile -Append -Encoding UTF8
     }
     catch {
-        Log-Data "ERROR: Unable to retrieve Windows Defender status."
+        "ERROR: Unable to retrieve Windows Defender status." | Out-File -FilePath $LogFile -Append -Encoding UTF8
     }
 }
 
 # Function to check antivirus information
 function Check-AntivirusStatus {
     try {
-        Log-Data "## Antivirus Information"
+        $content = @(
+            "## Antivirus Information",
+            ""
+        )
         # Retrieve antivirus information
         $antivirusInfo = Get-CimInstance -Namespace "root/SecurityCenter2" -ClassName "AntivirusProduct" -ErrorAction Stop
 
         if (!$antivirusInfo) {
-            Log-Data "Antivirus: Not Detected."
+            $content += "Antivirus: Not Detected."
+            $content | Out-File -FilePath $LogFile -Append -Encoding UTF8
             return
         }
 
         foreach ($av in $antivirusInfo) {
-            Log-Data "Antivirus: $($av.displayName)"
-            Log-Data "Product Status: $($av.productState)"
+            $content += "Antivirus: $($av.displayName)"
+            $content += "Product Status: $($av.productState)"
         }
-        Log-Data "***"
-        Log-Data ""
+        $content += "***"
+        $content += ""
+        $content | Out-File -FilePath $LogFile -Append -Encoding UTF8
     }
     catch {
-        Log-Data "ERROR: Unable to retrieve antivirus information."
+        "ERROR: Unable to retrieve antivirus information." | Out-File -FilePath $LogFile -Append -Encoding UTF8
     }
 }
 
 # Function to check recent antivirus scans
 function Check-AntivirusScans {
     try {
-        Log-Data "## Recent Antivirus Scans"
+        $content = @(
+            "## Recent Antivirus Scans",
+            ""
+        )
         # Retrieve recent scan logs
         $scanLogs = Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" `
             -FilterXPath "*[System[(EventID=1000 or EventID=1001)]]" `
             -MaxEvents 5
 
         if (-not $scanLogs) {
-            Log-Data "Recent Scans: None found."
+            $content += "Recent Scans: None found."
+            $content | Out-File -FilePath $LogFile -Append -Encoding UTF8
             return
         }
 
@@ -99,14 +102,15 @@ function Check-AntivirusScans {
             $scanResult = $log.Properties[3].Value
             $scanTime = $log.TimeCreated
 
-            Log-Data "Scan Type: $scanType"
-            Log-Data "Scan Result: $scanResult"
-            Log-Data "Scan Time: $scanTime"
+            $content += "Scan Type: $scanType"
+            $content += "Scan Result: $scanResult"
+            $content += "Scan Time: $scanTime"
         }
-        Log-Data "***"
+        $content += "***"
+        $content | Out-File -FilePath $LogFile -Append -Encoding UTF8
     }
     catch {
-        Log-Data "ERROR: Unable to retrieve scan logs."
+        "ERROR: Unable to retrieve scan logs." | Out-File -FilePath $LogFile -Append -Encoding UTF8
     }
 }
 

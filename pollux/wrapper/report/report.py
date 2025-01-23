@@ -1,3 +1,4 @@
+import re
 import os
 from datetime import datetime
 from pollux.config import PolluxConfig
@@ -30,7 +31,7 @@ def process_file_blocks(file_path):
     in_block = False
 
     for line in content:
-        if line.strip().startswith("## "):
+        if "## " in line:  # Start of a block
             if in_block and block:
                 blocks.append("".join(block).strip())
                 block = []
@@ -50,20 +51,24 @@ def process_file_blocks(file_path):
     return blocks
 
 
-# def get_pollux_config_details():
-#    """
-#    Adding POLLUX configuration details to the report.
-#    """
-#    config = PolluxConfig()
-#    config_details = [
-#        "## Pollux Configuration\n",
-#        f"- **OS**: {config.OS or 'Not defined'}\n",
-#        f"- **Legitimate Open Ports**: {', '.join(map(str, config.LEGITIMATE_OPEN_PORTS)) or 'None'}\n",
-#        f"- **Legitimate Processes**: {', '.join(config.LEGITIMATE_PROCESSES) or 'None'}\n",
-#        f"- **Legitimate Services**: {', '.join(config.LEGITIMATE_SERVICES) or 'None'}\n",
-#        f"- **Legitimate Users**: {', '.join(config.LEGITIMATE_USERS) or 'None'}\n",
-#    ]
-#    return "\n".join(config_details)
+def get_pollux_config_details(report_content):
+    """
+    Adding POLLUX configuration details to the report.
+    """
+    config = [
+        "## POLLUX CONFIGURATION\n",
+        f"- **OS**: `{PolluxConfig.OS or 'Not defined'}`\n",
+        f"- **Running as admin**: `{PolluxConfig.RUNNING_AS_ADMIN}`\n",
+        f"- **Temporary file location**: `{PolluxConfig.TEMPORARY_FILE_LOCATION or 'Not defined'}`\n",
+        f"- **Script list**: {', '.join(PolluxConfig.SCRIPT_LIST) or 'None'}\n",
+        f"- **Script extension**: `{PolluxConfig.SCRIPT_EXTENSION or 'Not defined'}`\n",
+        f"- **Report file location**: `{PolluxConfig.REPORT_FILE_LOCATION or 'Not defined'}`\n",
+        f"- **Report file name**: `{PolluxConfig.REPORT_FILE_NAME or 'Not defined'}`\n",
+    ]
+
+    report_content.append("\n".join(config))
+
+    return report_content
 
 
 def generate_md_report(file_list, delta_list, output_file):
@@ -76,18 +81,22 @@ def generate_md_report(file_list, delta_list, output_file):
 
     date, timestamp = get_current_timestamp()
 
-    report_content = [
+    report_template = [
         "# POLLUX REPORT\n",
         f"_Date: {date}_\n",
         f"_Timestamp: {timestamp}_\n",
+        f"_Pollux Version: {PolluxConfig.VERSION}_\n",
         "The POLLUX project is open source and licensed by MIT. As a reminder, it does not comply with any official standard or recommendation, and does not guarantee the security of the infrastructure tested.\n",
-        "---\n" "### DIFFENCE(S) WITH LAST LAUNCH OF POLLUX",
+        "\n---\n",
     ]
 
+    report_content = get_pollux_config_details(report_template)
     """
     If this is the first report generation, or if older files were deleted for some reasons, there won't be any delta list. 
     If so, it's not an error and will just be treated as an empty list.
     """
+
+    report_content.append("\n---\n## DIFFENCE(S) WITH LAST LAUNCH OF POLLUX\n")
 
     if not delta_list:
         report_content.append("NO PREVIOUS FILE FOUND\n")
@@ -97,71 +106,46 @@ def generate_md_report(file_list, delta_list, output_file):
             try:
                 blocks = process_file_blocks(file_path)
                 if blocks:
-                    report_content.append(f"#### Content from {file_name}\n")
+                    regex = r"[^\\/]+(?=\.[^\\/]+$)"
+                    script_name = re.search(regex, file_name).group(0)
+                    report_content.append(f"#### Content from {script_name}\n")
+                    report_content.append(
+                        f"**Temporary file location:** `{file_name}`\n"
+                    )
                     for block in blocks:
+                        report_content.append("```plaintext")
                         report_content.append(block)
+                        report_content.append("```")
                         report_content.append("\n")
                 else:
                     report_content.append(f"#### No relevant content in {file_name}\n")
             except Exception as e:
                 report_content.append(f"#### Error processing {file_name}: {e}\n")
 
-    report_content.append("### END OF DELTA\n" "\n" "---\n" "\n" "### CONTENT\n")
+    report_content.append("\n" "---\n" "\n" "## CONTENT\n")
 
     for file_name in sorted(file_list):
         file_path = os.path.join(PolluxConfig.LIN_TEMPORARY_FILE_LOCATION, file_name)
         try:
             blocks = process_file_blocks(file_path)
             if blocks:
-                report_content.append(f"#### Content from {file_name}\n")
+                regex = r"[^\\/]+(?=\.[^\\/]+$)"
+                script_name = re.search(regex, file_name).group(0)
+                report_content.append(f"#### Content from {script_name}\n")
+                report_content.append(f"**Temporary file location:** `{file_name}`\n")
                 for block in blocks:
+                    report_content.append("```plaintext")
                     report_content.append(block)
+                    report_content.append("```")
                     report_content.append("\n")
             else:
                 report_content.append(f"#### No relevant content in {file_name}\n")
         except Exception as e:
             report_content.append(f"#### Error processing {file_name}: {e}\n")
 
-    report_content.append("### END OF CONTENT\n\n")
-
-    #    report_content.extend([
-    #        "### ANNEXES\n",
-    #        "#### Configuration\n",
-    #        get_pollux_config_details(),
-    #        "\n",
-    #    ])
+    report_content.append("# END OF CONTENT\n\n")
 
     with open(output_file, "w") as report_file:
         report_file.write("\n".join(report_content))
 
     print(f"Report generated: {output_file}")
-
-
-"""
-Format of the report : 
-
-Presentation page
-recap page(s) (delta)
-Content page(s)
-Annexes
-
-"""
-
-"""
-Une fois le premier rapport généré, on le transforme en PDF ?
---> PDF par famille
-
-markdown2pdf
-#Pb updates
-#pb rights
-    -users
-    -files
-#Systeme
-    -env
-    -cron
-    -shells restreints
-
-#Rézo
-    -ports
-    -firewall/ACL
-"""

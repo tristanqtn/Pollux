@@ -12,7 +12,7 @@ class PolluxConfig:
     # Mandatory: Yes
     # Default:  OS = 'windows'
     #           OS = 'linux'
-    OS = "windows"
+    OS = "linux"
 
     # Type of session running Pollux
     # Type: boolean
@@ -59,14 +59,30 @@ class PolluxConfig:
     ts = datetime.now().strftime("%Y%m%d%H%M%S")
     REPORT_FILE_NAME = f"pollux_report_{ts}.md"
 
+    # List of services that are legitimate
+    # Type: list[str]
+    # Mandatory: Yes
+    # Default: LEGITIMATE_SERVICES = []
+    # Example: LEGITIMATE_SERVICES = ['mysql', 'apache2', 'nginx', 'httpd']
+    LEGITIMATE_SERVICES = [
+        "mysql",
+        "apache2",
+        "nginx",
+        "httpd",
+    ]
+
     # List of scripts to run
     # Type: list[str]
     # Mandatory: Yes
     # Example:     SCRIPT_LIST = ['firewallCheck', 'antivirusCheck', 'filesystemCheck', 'SessionCheck', 'PasswordPolicyCheck', 'PlannedTaskCheck', 'UpdateCheck']
     SCRIPT_LIST = [
+        "antivirusCheck",
+        "updateCheck",
         "passwordCheck",
         "portCheck",
-        "firewallCheck",
+        "envvarCheck",
+        "sessionCheck",
+        "plannedtaskCheck",
     ]
 
     # Extension of the script files
