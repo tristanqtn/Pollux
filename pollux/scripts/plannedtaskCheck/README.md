@@ -8,11 +8,11 @@ This directory contains scripts for verifying scheduled tasks. There are scripts
 
 ### **1. Windows Script**
 
-- **`sessionCheck.ps1`:** A PowerShell script designed for systems running Windows.
+- **`plannedtaskCheck.ps1`:** A PowerShell script designed for systems running Windows.
 
 ### **2. Linux Script**
 
-- **`sessionCheck.sh`:** A Bash script for checking Linux sessions.
+- **`plannedtaskCheck.sh`:** A Bash script for checking Linux sessions.
 
 ---
 

@@ -205,19 +205,35 @@ To install Pollux for usage, follow these steps:
 git clone https://github.com/tristanqtn/Pollux.git
 ```
 
-2. Run the installation script:
+2. Navigate to the Pollux directory:
+
+```bash
+cd pollux
+```
+
+3. **For Linux** - Change the permissions of the installation script:
+
+```bash
+chmod +x installers/bash.sh
+```
+
+4. Run the installation script:
 
 ```bash
 # (Linux)
 ./installers/bash.sh
 
 # (Windows)
-./installers/batch.bat
-# or
 ./installers/powershell.ps1
 ```
 
 Those scripts will make sure that all dependencies (Python3 & Poetry) are installed and that the Python wrapper is correctly set up. Then it installs the python dependencies.
+
+> [!WARNING]
+> Those script are generic and may suffer from unusual environment configuration. If you encounter any issue, please refer to the manual installation of dependencies. The main encoutered issue is the adding Poetry to the PATH because the installation location of the binary may vary.
+
+> [!TIP]
+> Pollux has been designed to be executed and managed with Poetry. Note that it's totally possible to use the tool without Poetry and simply with pip. But it's highly recommended to use it to manage the dependencies of the project.
 
 ### Development Installation
 
