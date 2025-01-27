@@ -12,7 +12,7 @@ class PolluxConfig:
     # Mandatory: Yes
     # Default:  OS = 'windows'
     #           OS = 'linux'
-    OS = "linux"
+    OS = "windows"
 
     # Type of session running Pollux
     # Type: boolean

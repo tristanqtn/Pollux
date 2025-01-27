@@ -1,4 +1,5 @@
 import os
+import logging
 
 from pollux.config import PolluxConfig
 from pollux.wrapper.utils.utils import check_path_exists
@@ -16,6 +17,12 @@ WIN_SCRIPT_PATH = {
     "firewallCheck": "\\pollux\\scripts\\firewallCheck\\firewallCheck",
 }
 
+# Configure logging
+logging.basicConfig(
+    format="[%(asctime)s] [%(levelname)s] | %(message)s",
+    level=logging.DEBUG,  # You can change this to INFO, WARNING, ERROR, etc.
+)
+
 
 def execute_antivirus_check_win(script_name="antivirusCheck"):
     """
@@ -28,16 +35,16 @@ def execute_antivirus_check_win(script_name="antivirusCheck"):
     :return: None
     """
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
     PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
@@ -55,16 +62,16 @@ def execute_updates_check_win(script_name="updateCheck"):
     :return: None
     """
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
     PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
@@ -82,16 +89,16 @@ def execute_envvar_check_win(script_name="envvarCheck"):
     :return: None
     """
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
     PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
@@ -111,17 +118,17 @@ def execute_session_check_win(script_name="sessionCheck"):
 
     # Check if the script is running as root
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     # Check if the path to the script exists
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     # Define the logfile
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
@@ -143,17 +150,17 @@ def execute_planned_task_check_win(script_name="plannedtaskCheck"):
 
     # Check if the script is running as root
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     # Check if the path to the script exists
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     # Define the logfile
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
@@ -175,17 +182,17 @@ def execute_file_system_check_win(script_name="filesystemCheck"):
 
     # Check if the script is running as root
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     # Check if the path to the script exists
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     # Define the logfile
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
@@ -207,17 +214,17 @@ def execute_password_check_win(script_name="passwordCheck"):
 
     # Check if the script is running as root
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     # Check if the path to the script exists
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     # Define the logfile
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
@@ -239,17 +246,17 @@ def execute_port_check_win(script_name="portCheck"):
 
     # Check if the script is running as root
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     # Check if the path to the script exists
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     # Define the logfile
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
@@ -271,17 +278,17 @@ def execute_firewall_check_win(script_name="firewallCheck"):
 
     # Check if the script is running as root
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     # Check if the path to the script exists
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
-        print(f"Path to script does not exist : {full_path}")
+        logging.error(f"Path to script does not exist : {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     # Define the logfile
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
@@ -303,18 +310,18 @@ def template(script_name="scriptName"):
     
     # Check if the script is running as root
     if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        print("Please run the script as an administrator.")
+        logging.error("Please run the script as an administrator.")
         return
     print(f"Executing script: {script_name}")
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     # Check if the path to the script exists
     if check_path_exists(full_path):
-        print(f"Path to script exists : {full_path}")
+        logging.info(f"Path to script exists : {full_path}")
     else:
         print(f"Path to script does not exist: {full_path}")
         return
     if full_path is None:
-        print(f"Script {script_name} not found.")
+        logging.error(f"Script {script_name} not found.")
         return
     # Define the logfile
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"

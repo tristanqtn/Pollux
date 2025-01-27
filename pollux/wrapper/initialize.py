@@ -1,8 +1,17 @@
 import os
 import sys
+import logging
+
+from colorama import Fore
 
 from pollux.config import PolluxConfig
 from pollux.wrapper.utils.utils import detect_os, running_as_root
+
+# Configure logging
+logging.basicConfig(
+    format="[%(asctime)s] [%(levelname)s] | %(message)s",
+    level=logging.DEBUG,  # You can change this to INFO, WARNING, ERROR, etc.
+)
 
 
 def logo():
@@ -20,13 +29,17 @@ __/\\\\\\\\\\\\\__________________/\\\\\\_____/\\\\\\___________________________
        _\/\\\______________\///\\\\\/____/\\\\\\\\\__/\\\\\\\\\_\//\\\\\\\\\___/\\\/\///\\\_
         _\///_________________\/////_____\/////////__\/////////___\/////////___\///____\///__
     """)
-    print("======================== Pollux Wrapper ========================")
-    print("Welcome to Pollux wrapper !")
-    print("Pollux is a tool to conduct security audits on Windows and Linux systems.")
-    print("You are currently running Pollux in its version: " + PolluxConfig.VERSION)
-    print("Current directory:", os.getcwd())
-    print("Python version:", sys.version)
-    print("=================================================================\n")
+    logging.info("======================== Pollux Wrapper ========================")
+    logging.info("Welcome to Pollux wrapper !")
+    logging.info(
+        "Pollux is a tool to conduct security audits on Windows and Linux systems."
+    )
+    logging.info(
+        f"You are currently running Pollux in its version: {PolluxConfig.VERSION}"
+    )
+    logging.info(f"Current directory: {os.getcwd()}")
+    logging.info(f"Python version: {sys.version}")
+    logging.info("=================================================================\n")
 
 
 def check_config():
@@ -37,20 +50,22 @@ def check_config():
     :param: None
     :return: None
     """
-    print("======================== Pollux Config ==========================")
-    print("Pollux configuration :\n")
+    logging.info("======================== Pollux Config ==========================")
+    logging.info("Pollux configuration :\n")
     if PolluxConfig.OS != detect_os():
-        print("The current OS is different from the one configured in Pollux.")
+        logging.critical(
+            "The current OS is different from the one configured in Pollux."
+        )
         exit(1)
     else:
         if PolluxConfig.RUNNING_AS_ADMIN != running_as_root():
-            print(
+            logging.critical(
                 "The current user privileges are different from the one configured in Pollux."
             )
             exit(1)
         else:
             if PolluxConfig.RUNNING_AS_ADMIN == 0:
-                print(
+                logging.warning(
                     "IMPORTANT : \tPollux is running as a user. This tool as been designed to run as root.\n\t\tScripts will be executed with limited privileges and won't very accurate.\n"
                 )
             if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
@@ -71,87 +86,84 @@ def check_config():
                         PolluxConfig.LIN_REPORT_FILE_LOCATION
                     )
             else:
-                print(
+                logging.info(
                     "Temporary file location (make sure to match your OS filesystem):",
                     PolluxConfig.TEMPORARY_FILE_LOCATION,
                 )
 
             PolluxConfig.display_config()
 
-            print("The current environment matches the one configured in Pollux.")
-            print("Everything OK, Pollux is ready to run.")
-    print("=================================================================\n")
+            logging.info(
+                "The current environment matches the one configured in Pollux."
+            )
+            logging.info("Everything OK, Pollux is ready to run.")
+    logging.info("=================================================================\n")
 
 
 def flush_temporary_files():
     """
     Flush the temporary files in the temporary file location.
     """
-    print("======================== Pollux Cleanup =========================")
+    logging.info("======================== Pollux Cleanup =========================")
     if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
-        print("Temporary file location not set. Exiting.")
+        logging.info("Temporary file location not set. Exiting.")
     elif PolluxConfig.RUNNING_AS_ADMIN == 0 and PolluxConfig.OS == "linux":
-        print(
-            "Need to be root to flush temporary files in :",
-            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        logging.error(
+            f"Need to be root to flush temporary files in : {PolluxConfig.TEMPORARY_FILE_LOCATION}"
         )
     else:
-        print(
+        logging.info(
             "Flushing temporary files from previous runs in :",
             PolluxConfig.TEMPORARY_FILE_LOCATION,
         )
         for file in os.listdir(PolluxConfig.TEMPORARY_FILE_LOCATION):
-            print("Deleting :", file)
+            logging.info(f"Deleting : {file}")
             os.remove(PolluxConfig.TEMPORARY_FILE_LOCATION + file)
-        print("Temporary files flushed.")
-    print("=================================================================\n")
+        logging.info("Temporary files flushed.")
+    logging.info("=================================================================\n")
 
 
 def flush_old_temporary_files():
     """
     Flush the temporary files in the temporary file location.
     """
-    print("======================== Pollux Cleanup =========================")
+    logging.info("======================== Pollux Cleanup =========================")
     if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
-        print("Temporary file location not set. Exiting.")
+        logging.info("Temporary file location not set. Exiting.")
     elif PolluxConfig.RUNNING_AS_ADMIN == 0 and PolluxConfig.OS == "linux":
-        print(
-            "Need to be root to flush temporary files in :",
-            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        logging.error(
+            f"Need to be root to flush temporary files in : {PolluxConfig.TEMPORARY_FILE_LOCATION}"
         )
     else:
-        print(
-            "Flushing temporary files from previous runs in :",
-            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        logging.info(
+            f"Flushing temporary files from previous runs in : {PolluxConfig.TEMPORARY_FILE_LOCATION}"
         )
         for file in os.listdir(PolluxConfig.TEMPORARY_FILE_LOCATION):
             if file.startswith("old_"):
-                print("Deleting :", file)
+                logging.info(f"Deleting : {file}")
                 os.remove(PolluxConfig.TEMPORARY_FILE_LOCATION + file)
-    print("=================================================================\n")
+    logging.info("=================================================================\n")
 
 
 def stash_temporary_file():
     """
     Transform all the temporary files in the temporary file location to old ones.
     """
-    print("======================== Pollux Delta ===========================")
+    logging.info("======================== Pollux Delta ===========================")
     if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
-        print("Temporary file location not set. Exiting.")
+        logging.info("Temporary file location not set. Exiting.")
     elif PolluxConfig.RUNNING_AS_ADMIN == 0 and PolluxConfig.OS == "linux":
-        print(
-            "Need to be root to stash temporary files in :",
-            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        logging.error(
+            f"Need to be root to stash temporary files in : {PolluxConfig.TEMPORARY_FILE_LOCATION}"
         )
     else:
-        print(
-            "Stashing temporary files from previous runs in :",
-            PolluxConfig.TEMPORARY_FILE_LOCATION,
+        logging.info(
+            f"Stashing temporary files from previous runs in : {PolluxConfig.TEMPORARY_FILE_LOCATION}"
         )
         for file in os.listdir(PolluxConfig.TEMPORARY_FILE_LOCATION):
-            print("Stashing :", file)
+            logging.info(f"Stashing : {file}")
             os.rename(
                 PolluxConfig.TEMPORARY_FILE_LOCATION + file,
                 PolluxConfig.TEMPORARY_FILE_LOCATION + "old_" + file,
             )
-    print("=================================================================\n")
+    logging.info("=================================================================\n")
