@@ -132,16 +132,19 @@ def generate_md_report(file_list, delta_list, output_file):
                 regex = r"[^\\/]+(?=\.[^\\/]+$)"
                 script_name = re.search(regex, file_name).group(0)
                 report_content.append(f"#### Content from {script_name}\n")
-                report_content.append(f"**Temporary file location:** `{file_name}`\n")
+                add_explanations_to_pollux(report_content, script_name)
+                report_content.append(f"\n**Temporary file location:** `{file_name}`\n")
                 for block in blocks:
                     report_content.append("```plaintext")
                     report_content.append(block)
                     report_content.append("```")
                     report_content.append("\n")
+                add_remediations_to_pollux(report_content, script_name)
             else:
                 report_content.append(f"#### No relevant content in {file_name}\n")
         except Exception as e:
             report_content.append(f"#### Error processing {file_name}: {e}\n")
+        
 
     report_content.append("# END OF CONTENT\n\n")
 
