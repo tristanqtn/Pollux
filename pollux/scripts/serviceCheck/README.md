@@ -35,4 +35,3 @@ This directory contains scripts for verifying running scripts permissions and de
 - Both scripts assume the user has root or administrative privileges. Running them as a standard user may lead to incomplete results or errors.
 
 ---
-s
