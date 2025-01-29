@@ -132,7 +132,7 @@ def conduct_audit():
             execute_script_list_lin(script)
     else:
         logging.error("OS not supported by Pollux.")
-    if(PolluxConfig.SCRIPT_LIST):
+    if PolluxConfig.SCRIPT_LIST:
         logging.info("All scripts executed. The temporary files are stored in : ")
         for file in PolluxConfig.TEMPORARY_FILE_LIST:
             logging.info(file)

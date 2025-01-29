@@ -291,14 +291,16 @@ def execute_firewall_check_win(script_name="firewallCheck"):
     PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
     # Execute the script
     port_table = ",".join(map(str, PolluxConfig.WIN_PORT_TABLE))
-    trusted_subnets = ",".join(f'"{subnet}"' for subnet in PolluxConfig.WIN_TRUSTED_SUBNETS)
+    trusted_subnets = ",".join(
+        f'"{subnet}"' for subnet in PolluxConfig.WIN_TRUSTED_SUBNETS
+    )
     command = (
         f'powershell.exe -File "{full_path}" -LogFile "{Logfile}" '
-        f'-PortTable {port_table} '
-        f'-TrustedSubnets {trusted_subnets}'
+        f"-PortTable {port_table} "
+        f"-TrustedSubnets {trusted_subnets}"
     )
     if PolluxConfig.RUNNING_AS_ADMIN == 1:
-        command += f' -RunLevel {PolluxConfig.WIN_FIREWALL_AUDIT_LEVEL}'
+        command += f" -RunLevel {PolluxConfig.WIN_FIREWALL_AUDIT_LEVEL}"
     os.system(command)
 
 

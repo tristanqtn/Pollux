@@ -137,7 +137,7 @@ class PolluxConfig:
     # =========================================================
 
     # Version of Pollux
-    VERSION = "1.7.2" # Why would you change this? It's just a version number.
+    VERSION = "1.7.2"  # Why would you change this? It's just a version number.
 
     # Temporary file location list
     # Type: list[str]

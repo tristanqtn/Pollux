@@ -8,8 +8,9 @@
 # from .module2 import function2
 
 # You can also define package-level variables or functions here.
-__version__ = '1.7.2'
-__author__ = 'PFE24-T-252'
+__version__ = "1.7.2"
+__author__ = "PFE24-T-252"
+
 
 # You can also include any package initialization code here.
 def initialize_package():
