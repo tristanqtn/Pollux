@@ -18,11 +18,15 @@ Each installer will check if python is installed on the machine. If not, the ins
 ### 1. Windows Installer
 
 - **`install.ps1`:** A PowerShell script designed to install Pollux for systems running on Windows.
-- **`install.bat`:** A Batch script for installing Pollux for systems running on Windows.
 
 ### 2. Linux Installer
 
 - **`install.sh`:** A Bash script designed to install Pollux for systems running on Linux.
+
+### Known Issues
+
+- The installers are designed to work on Windows and Linux. They may not work on MacOS.
+- The installer could fail to resolve the poetry binary after installation due to the PATH environment variable. In this case, you can add the poetry binary to the PATH manually. Usually, the poetry binary is located in the `~/.poetry/bin` directory. You can use this ressource to add the poetry binary to the PATH : https://github.com/python-poetry/install.python-poetry.org
 
 ## Features
 

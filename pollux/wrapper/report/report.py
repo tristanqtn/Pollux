@@ -104,7 +104,7 @@ def generate_md_report(file_list, delta_list, output_file):
     If so, it's not an error and will just be treated as an empty list.
     """
 
-    report_content.append("\n---\n## DIFFRENCES WITH LAST POLLUX SCAN\n")
+    report_content.append("\n---\n## DIFFERENCES WITH LAST POLLUX SCAN\n")
 
     if not delta_list:
         report_content.append("NO PREVIOUS FILE FOUND\n")
@@ -206,6 +206,10 @@ def add_explanations_to_pollux(file_name, report_content):
         report_content.append(
             "This script aims to check OS version and packages. It allows to see if the system is up to date, to prevent outdated system issues.\n"
         )
+    elif file_name == "serviceCheck":
+        report_content.append(
+            "This script aims to list services running on the system. It helps to detect unlegitimate services.\n"
+        )
 
     """
     TEMPLATE : 
@@ -292,4 +296,8 @@ def add_remediations_to_pollux(file_name, report_content):
         )
         report_content.append(
             "If possible, use a tool to monitor OS and packages versions.\n"
+        )
+    elif file_name == "serviceCheck":
+        report_content.append(
+            "Monitor services running on the system, to detect unlegitimate ones. Reduce the number of services running on the system to the strcit minimum.\n"
         )

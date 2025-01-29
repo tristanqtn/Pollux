@@ -10,9 +10,18 @@ Pollux is made of a Python wrapper that orchestrate the scripts execution. The s
 
 ### Technologies
 
-- Python 3.11
+- Python 3.10
 - Poetry
 - Bash, Powershell scripts
+
+> [!NOTE]
+> **Note :** We chose to use Python as the main language for the wrapper because it is a versatile language that can be used on multiple operating systems. The scripts are written in Bash and Powershell to maximize compatibility with the audited devices.
+
+> [!NOTE]
+> **Note :** We chose to use Poetry as the dependency manager because it is a simple and efficient tool to manage Python dependencies. Moreover, it allows us to create a virtual environment for the project, which is essential to avoid conflicts with other Python projects. It's also way better than the default Python package manager, pip.
+
+> [!NOTE]
+> **Note :** We chose Python in it's version 3.10 to maximaze compatibility with the hosting system since default version of Python is still 3.10 in most Linux distributions.
 
 ### Content
 

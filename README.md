@@ -112,7 +112,7 @@ Those scripts are the core of the Pollux tool. They are meant to scan for a defi
 - [x] Planned tasks
 - [x] Security and package updates
 - [x] Environment variables
-- [ ] Running services
+- [x] Running services
 
 All scripts should produce a consistant output in order to easily produce the final report. The temporary file containing the result of the script should have the name of the script and the extension `.tmp`. For a same script multiple piece of information can be gathered. The output format is the following one:
 
@@ -158,23 +158,35 @@ The Pollux repository is structured as follows:
 
 ```plaintext
 pollux/
-├── installers/         #everything related to the installation of the tool
+├── installers/         # everything related to the installation of the tool
 │   ├── bash.sh
-│   ├── batch.bat
 │   └── powershell.ps1
-├── pollux/             #the main package of the tool
-│   ├── config.py       #the configuration object
-│   ├── main.py         #the main script of the tool
+├── pollux/             # the main package of the tool
+│   ├── config.py       # the configuration object
+│   ├── main.py         # the main script of the tool
 │   ├── ...
-│   └── scripts/        #the scripts to run
-│       ├── antivirusCheck
-│               ├── antivirusCheck.sh
-│               ├── antivirusCheck.ps1
-│       ├── ...
-├── .gitignore          #the gitignore file
-├── pyproject.toml      #the poetry configuration file
-├── LICENSE             #the license file
-└── README.md           #the main documentation file
+│   ├── scripts/        # script collection
+│   │   ├── antivirusCheck/
+│   │   │   ├── antivirusCheck.sh
+│   │   │   ├── antivirusCheck.ps1
+│   │   ├── passwordCheck/
+│   │   │   ├── passwordCheck.sh
+│   │   │   ├── passwordCheck.ps1
+│   │   └── ...
+│   └── wrapper/
+│       ├── initialize.py  # file responsible for the initialization of the tool
+│       ├── wrapper.py     # file responsible for the orchestration of the scripts
+│       ├── executors/
+│       │   ├── lin_executors.py  # file responsible for the execution of the scripts on Linux
+│       │   └── win_executors.py  # file responsible for the execution of the scripts on Windows
+│       ├── utils/
+│       │   └── utils.py  # file containing utility functions
+│       └── report/
+│           └── report.py  # file responsible for the audit generation of the report
+├── .gitignore          # the gitignore file
+├── pyproject.toml      # the poetry configuration file
+├── LICENSE             # the license file
+└── README.md           # the main documentation file
 ```
 
 ### Infrastructures
@@ -292,7 +304,7 @@ poetry run python -m pollux.main
 4. The script will generate a report in markdown format in the directory specified in the config object. This report will contain the results of the security audit.
 
 > [!TIP]
-> Add_ons: You can schedule the execution of the script using CRON or planned tasks. You can also modify the configuration object to add new scripts or modify the existing ones.
+> Add-ons: You can schedule the execution of the script using CRON or planned tasks. You can also modify the configuration object to add new scripts or modify the existing ones.
 
 ## Authors
 

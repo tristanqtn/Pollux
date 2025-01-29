@@ -2,8 +2,6 @@ import os
 import sys
 import logging
 
-from colorama import Fore
-
 from pollux.config import PolluxConfig
 from pollux.wrapper.utils.utils import detect_os, running_as_root
 
@@ -66,7 +64,7 @@ def check_config():
         else:
             if PolluxConfig.RUNNING_AS_ADMIN == 0:
                 logging.warning(
-                    "IMPORTANT : \tPollux is running as a user. This tool as been designed to run as root.\n\t\tScripts will be executed with limited privileges and won't very accurate.\n"
+                    "IMPORTANT : Pollux is running as a user. This tool as been designed to run as root. Scripts will be executed with limited privileges or won't run.\n"
                 )
             if PolluxConfig.TEMPORARY_FILE_LOCATION == "":
                 if PolluxConfig.OS == "windows":

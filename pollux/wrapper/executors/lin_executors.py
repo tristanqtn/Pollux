@@ -15,6 +15,7 @@ LIN_SCRIPT_PATH = {
     "passwordCheck": "/pollux/scripts/passwordCheck/passwordCheck",
     "portCheck": "/pollux/scripts/portCheck/portCheck",
     "firewallCheck": "/pollux/scripts/firewallCheck/firewallCheck",
+    "serviceCheck": "/pollux/scripts/serviceCheck/serviceCheck",
 }
 
 # Configure logging
@@ -147,7 +148,7 @@ def execute_planned_task_check_lin(script_name="plannedtaskCheck"):
     This script requires root privileges to run.
 
     :param script_name: name of the script to execute
-    :default script_name: sessionCheck
+    :default script_name: plannedtaskCheck
     :type script_name: str
     :return: None
     """
@@ -176,11 +177,11 @@ def execute_planned_task_check_lin(script_name="plannedtaskCheck"):
 
 def execute_file_system_check_lin(script_name="filesystemCheck"):
     """
-    Execute the planned task check script for Linux.
+    Execute the file system check script for Linux.
     This script requires root privileges to run.
 
     :param script_name: name of the script to execute
-    :default script_name: sessionCheck
+    :default script_name: filesystemCheck
     :type script_name: str
     :return: None
     """
@@ -209,11 +210,11 @@ def execute_file_system_check_lin(script_name="filesystemCheck"):
 
 def execute_password_check_lin(script_name="passwordCheck"):
     """
-    Execute the planned task check script for Linux.
+    Execute the password policies check script for Linux.
     This script requires root privileges to run.
 
     :param script_name: name of the script to execute
-    :default script_name: sessionCheck
+    :default script_name: passwordCheck
     :type script_name: str
     :return: None
     """
@@ -242,11 +243,11 @@ def execute_password_check_lin(script_name="passwordCheck"):
 
 def execute_port_check_lin(script_name="portCheck"):
     """
-    Execute the planned task check script for Linux.
+    Execute the network port check script for Linux.
     This script requires root privileges to run.
 
     :param script_name: name of the script to execute
-    :default script_name: sessionCheck
+    :default script_name: portCheck
     :type script_name: str
     :return: None
     """
@@ -275,11 +276,44 @@ def execute_port_check_lin(script_name="portCheck"):
 
 def execute_firewall_check_lin(script_name="firewallCheck"):
     """
-    Execute the planned task check script for Linux.
+    Execute the network firewall check script for Linux.
     This script requires root privileges to run.
 
     :param script_name: name of the script to execute
-    :default script_name: sessionCheck
+    :default script_name: firewallCheck
+    :type script_name: str
+    :return: None
+    """
+
+    # Check if the script is running as root
+    if PolluxConfig.RUNNING_AS_ADMIN == 0:
+        logging.error("Please run the script as an administrator.")
+        return
+    full_path = f"{os.getcwd()}{LIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
+    # Check if the path to the script exists
+    if check_path_exists(full_path):
+        logging.info(f"Path to script exists : {full_path}")
+        dos2unix(full_path)
+    else:
+        logging.error(f"Path to script does not exist : {full_path}")
+        return
+    if full_path is None:
+        logging.error(f"Script {script_name} not found.")
+        return
+    # Define the logfile
+    Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
+    PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
+    # Execute the script
+    os.system(f"bash {full_path} {Logfile}")
+
+
+def execute_service_check_lin(script_name="serviceCheck"):
+    """
+    Execute the services check script for Linux.
+    This script requires root privileges to run.
+
+    :param script_name: name of the script to execute
+    :default script_name: serviceCheck
     :type script_name: str
     :return: None
     """
