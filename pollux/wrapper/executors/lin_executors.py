@@ -304,7 +304,9 @@ def execute_firewall_check_lin(script_name="firewallCheck"):
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
     PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
     # Execute the script
-    os.system(f"bash {full_path} {Logfile}")
+    os.system(
+        f"bash {full_path} --LogFile {Logfile} --PortTable {PolluxConfig.LIN_PORT_TABLE} --TrustedSubnets {PolluxConfig.LIN_TRUSTED_SUBNETS}"
+    )
 
 
 def execute_service_check_lin(script_name="serviceCheck"):

@@ -269,7 +269,6 @@ def execute_port_check_win(script_name="portCheck"):
 def execute_firewall_check_win(script_name="firewallCheck"):
     """
     Execute the firewall check script for Windows.
-    This script requires root privileges to run.
 
     :param script_name: name of the script to execute
     :default script_name: firewallCheck
@@ -277,10 +276,6 @@ def execute_firewall_check_win(script_name="firewallCheck"):
     :return: None
     """
 
-    # Check if the script is running as root
-    if PolluxConfig.RUNNING_AS_ADMIN == 0:
-        logging.error("Please run the script as an administrator.")
-        return
     full_path = f"{os.getcwd()}{WIN_SCRIPT_PATH.get(script_name)}{PolluxConfig.SCRIPT_EXTENSION}"
     # Check if the path to the script exists
     if check_path_exists(full_path):
@@ -295,7 +290,16 @@ def execute_firewall_check_win(script_name="firewallCheck"):
     Logfile = PolluxConfig.TEMPORARY_FILE_LOCATION + script_name + ".tmp"
     PolluxConfig.TEMPORARY_FILE_LIST.append(Logfile)
     # Execute the script
-    os.system(f"powershell.exe {full_path} {Logfile}")
+    port_table = ",".join(map(str, PolluxConfig.WIN_PORT_TABLE))
+    trusted_subnets = ",".join(f'"{subnet}"' for subnet in PolluxConfig.WIN_TRUSTED_SUBNETS)
+    command = (
+        f'powershell.exe -File "{full_path}" -LogFile "{Logfile}" '
+        f'-PortTable {port_table} '
+        f'-TrustedSubnets {trusted_subnets}'
+    )
+    if PolluxConfig.RUNNING_AS_ADMIN == 1:
+        command += f' -RunLevel {PolluxConfig.WIN_FIREWALL_AUDIT_LEVEL}'
+    os.system(command)
 
 
 def execute_service_check_win(script_name="serviceCheck"):

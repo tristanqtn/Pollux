@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pollux"
-version = "1.0.0"
+version = "1.7.2"
 description = "Pollux is an automated configuration and vulnerability scanner."
 authors = ["PFE24-T-252"]
 license = "MIT"

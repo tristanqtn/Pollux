@@ -1,4 +1,4 @@
-# Pollux
+# Pollux - 1.7.2
 
 ```plaintext
 __/\\\\\\\\\\\\\__________________/\\\\\\_____/\\\\\\________________________________
@@ -39,7 +39,7 @@ __/\\\\\\\\\\\\\__________________/\\\\\\_____/\\\\\\___________________________
 
 ## Description
 
-Pollux is a cybersecurity tool that allows small and medium-sized businesses to perform security audits on their infrastructure. It is a simple and automated solution that does not require advanced computer or cybersecurity skills.
+Pollux is a cybersecurity tool that allows small and medium-sized businesses to perform security audits on their infrastructure. It is a simple and automated solution that does not require advanced computer or cybersecurity skills. The tool scans the company's servers and identifies potential vulnerabilities, misconfigurations, and security weaknesses. It provides a detailed report of the audit results, including recommendations for improving the security of the infrastructure.
 
 ### Context
 
