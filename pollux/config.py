@@ -48,10 +48,16 @@ class PolluxConfig:
     #   - updateCheck
 
     SCRIPT_LIST = [
-        "passwordCheck",
+        "antivirusCheck",
         "envvarCheck",
-        "sessionCheck",
+        "filesystemCheck",
         "firewallCheck",
+        "passwordCheck",
+        "plannedtaskCheck",
+        "portCheck",
+        "serviceCheck",
+        "sessionCheck",
+        "updateCheck",
     ]
 
     # =========================================================
