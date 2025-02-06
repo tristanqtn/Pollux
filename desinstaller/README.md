@@ -18,8 +18,8 @@ If you want to remove Python and Poetry from your machine, you can follow the fo
 
 ### 1. Windows Uninstaller
 
-- **`install.ps1`:** A PowerShell script designed to uninstall Pollux for systems running on Windows.
+- **`uninstall.ps1`:** A PowerShell script designed to uninstall Pollux for systems running on Windows.
 
 ### 2. Linux Uninstaller
 
-- **`install.sh`:** A Bash script designed to uninstall Pollux for systems running on Linux.
+- **`uninstall.sh`:** A Bash script designed to uninstall Pollux for systems running on Linux.
