@@ -17,11 +17,11 @@ Each installer will check if python is installed on the machine. If not, the ins
 
 ### 1. Windows Installer
 
-- **`install.ps1`:** A PowerShell script designed to install Pollux for systems running on Windows.
+- **`powershell.ps1`:** A PowerShell script designed to install Pollux for systems running on Windows.
 
 ### 2. Linux Installer
 
-- **`install.sh`:** A Bash script designed to install Pollux for systems running on Linux.
+- **`bash.sh`:** A Bash script designed to install Pollux for systems running on Linux.
 
 ### Known Issues
 
