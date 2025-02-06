@@ -1,6 +1,6 @@
-# Pollux Installers
+# Pollux Desinstallers
 
-This directory contains everything to uninstall Pollux on your machine.
+This directory contains everything to uninstall Pollux from your machine.
 
 ## Uninstallation Scripts
 
